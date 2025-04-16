@@ -10,7 +10,7 @@ class TextFieldContainer extends StatefulWidget {
 class _TextFieldContainerState extends State<TextFieldContainer> {
   var HidePassword = false;
   var TrailingIcon = Icons.person_outline;
-  var LeadingIcon = null;
+  var LeadingIcon;
   String _checkType(type) {
     if (type == "password") {
       HidePassword = true;
@@ -23,9 +23,12 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     var title = _checkType(widget.type);
+    var mediamSize = MediaQuery.sizeOf(context).width > (600);
 
     return Container(
+      constraints: BoxConstraints(maxWidth: mediamSize ? size.width * 0.4 : size.width),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
@@ -61,7 +64,10 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
                 cursorHeight: 20,
                 decoration: InputDecoration(border: InputBorder.none),
               ),
-              trailing: Icon(TrailingIcon,color: Color.fromARGB(255, 144, 144, 144),),
+              trailing: Icon(
+                TrailingIcon,
+                color: Color.fromARGB(255, 144, 144, 144),
+              ),
               leading: LeadingIcon,
             ),
           ),
@@ -72,14 +78,14 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
 }
 
 class _visablePasswordIcon extends StatelessWidget {
-  const _visablePasswordIcon({
-    super.key,
-  });
+  const _visablePasswordIcon();
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      style: ElevatedButton.styleFrom(backgroundColor: Color.fromARGB(255, 115, 100, 251)),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color.fromARGB(255, 115, 100, 251),
+      ),
       icon: Icon(Icons.remove_red_eye_outlined, color: Colors.black87),
       onPressed: () {},
     );
