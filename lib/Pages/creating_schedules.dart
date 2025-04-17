@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedule_me/Class/Subject.dart';
 import 'package:schedule_me/Router.dart';
 import 'package:schedule_me/Widgets/ButtonWithTextandIcon.dart';
 import 'package:schedule_me/Widgets/Container&Title&Subtitle&Button.dart';
@@ -26,7 +27,7 @@ class _CreatingSchedulesPageState extends State<CreatingSchedulesPage> {
   Widget GetSubjects(List fetchedSubjects) {
     List<Widget> widget_list=[];
     for (var subjects in fetchedSubjects) {
-      widget_list.add(ContainerTitleSubtitleButton());
+      widget_list.add(ContainerTitleSubtitleButton(SubjectObject: Subject(Name: subjects, Type: "تخصصية اجبارية", Hours: 2),));
     }
     var crossAxisCount=(MediaQuery.of(context).size.width/400).round();
     print(crossAxisCount);
@@ -36,7 +37,7 @@ class _CreatingSchedulesPageState extends State<CreatingSchedulesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("جداول جديدة"), shadowColor: Colors.grey),
+      appBar: AppBar(title: Text("جداول جديدة"),elevation: 2,surfaceTintColor: Colors.grey,backgroundColor: Colors.white, shadowColor: Colors.black,),
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(4)),

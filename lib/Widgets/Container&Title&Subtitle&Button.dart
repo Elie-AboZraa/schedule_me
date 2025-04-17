@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:schedule_me/Class/Subject.dart';
 import 'package:schedule_me/Widgets/ContainerBox.dart';
 
 class ContainerTitleSubtitleButton extends StatefulWidget {
-  const ContainerTitleSubtitleButton({super.key});
+  final Subject SubjectObject;
+  const ContainerTitleSubtitleButton({required this.SubjectObject, super.key});
 
   @override
   State<ContainerTitleSubtitleButton> createState() => _ContainerTitleSubtitleButtonState();
@@ -11,9 +13,11 @@ class ContainerTitleSubtitleButton extends StatefulWidget {
 class _ContainerTitleSubtitleButtonState extends State<ContainerTitleSubtitleButton> {
   @override
   Widget build(BuildContext context) {
+    var subject=widget.SubjectObject;
     return ContainerBox(
           //value 1
-          title: "تصميم مواقع الويب",
+          //title: "تصميم مواقع الويب",
+          title: subject.Name,
           titletextstyle: Theme.of(
             context,
           ).textTheme.titleMedium?.apply(color: Colors.black),
@@ -25,14 +29,14 @@ class _ContainerTitleSubtitleButtonState extends State<ContainerTitleSubtitleBut
               children: [
                 //value 2
                 Text(
-                  "تخصصية اجبارية",
+                  subject.Type,
                   style: Theme.of(
                     context,
                   ).textTheme.labelSmall?.apply(color: Colors.grey),
                 ),
                 //value 3
                 Text(
-                  "3 ساعات",
+                  "${subject.Hours} ساعات ",
                   style: Theme.of(
                     context,
                   ).textTheme.labelSmall?.apply(color: Colors.grey),

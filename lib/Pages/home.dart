@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_me/Widgets/StikyInfo.dart';
+import 'package:schedule_me/Widgets/StikyTopConatiner.dart';
 import 'package:schedule_me/Helpers/_schedule_managing.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final bool? isGuist;
+  const HomePage({this.isGuist,super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -12,6 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       
       body: Column(
@@ -24,7 +26,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(top: 16),
               width: MediaQuery.of(context).size.width*0.90,
               
-              child: StikyInfo(),
+              child: Stikytopconatiner(),
             ),
           ),
           Container(child: 

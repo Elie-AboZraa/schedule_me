@@ -28,13 +28,13 @@ class _CheckBoxGroupState extends State<CheckBoxGroup> {
       child: Column(        
         children: [
           CheckboxListTile(
-            title: Text("sakldnasd",textDirection: TextDirection.rtl,),
+            title: Text("مقررات متاحة",textDirection: TextDirection.rtl,),
             selected: true,
             value: value,
             onChanged: (value)=>_flipValue(value),
           ),
           CheckboxListTile(
-            title: Text("sosoalrakasa"),
+            title: Text("مقررات غير متاحة",textDirection: TextDirection.rtl,),
             value: value,
             onChanged: (value)=>_flipValue(value),
           ),

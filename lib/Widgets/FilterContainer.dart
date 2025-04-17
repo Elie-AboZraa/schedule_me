@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedule_me/Helpers/_MakeEnteries.dart';
 import 'package:schedule_me/Widgets/CheckBoxGroup.dart';
 import 'package:schedule_me/Widgets/DropDownButtonWithTitle.dart';
 
@@ -19,17 +20,18 @@ class _FilterContainerState extends State<FilterContainer> {
   Widget ListTileWithSelection({Title = ""}) {
     var options = [];
     switch (Title) {
-      case "Subject_Type":
-        options = ["", "", ""];
-      case "Subject_Type":
-        options = [];
+      case "نوع المقرر":
+        options = ["اجباري تخصصي","اجباري كلية","اختياري تخصصي","اختياري كلية"];
+      case "الترتيب حسب":
+        options = ["اسم","عدد الساعات",];
       case "Subject_Type":
         options = [];
 
       default:
-        options = [];
+       // options = [];
     }
-    return DropDownButtonWithTitle(enteries: options, title: Title);
+    print(options);
+    return DropDownButtonWithTitle(enteries: makeEnteries(options), title: Title);
   }
 
   void _onStateChanged() {
@@ -44,13 +46,13 @@ class _FilterContainerState extends State<FilterContainer> {
         Row(
           children: [
             ListTileWithSelection(Title: "نوع المقرر"),
-            ListTileWithSelection(Title: "نوع المقرر"),
+            ListTileWithSelection(Title: "الترتيب حسب"),
           ],
         ),
         Row(
           children: [
             CheckBoxGroup(onStateChanged: _onStateChanged),
-            ListTileWithSelection(Title: "نوع المقرر"),
+            ListTileWithSelection(Title: ""),
           ],
         ),
       ],

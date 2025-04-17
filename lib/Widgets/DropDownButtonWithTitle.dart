@@ -2,18 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:schedule_me/Helpers/_MakeEnteries.dart';
 import 'package:schedule_me/Widgets/CheckBoxGroup.dart';
 
-var value = "";
-
-class DropDownButtonWithTitle extends StatelessWidget {
-  const DropDownButtonWithTitle({
+class DropDownButtonWithTitle extends StatefulWidget {
+  final List<DropdownMenuItem> enteries;
+  final String title;
+  DropDownButtonWithTitle({
     super.key,
     required this.title,
     required this.enteries,
   });
 
-  final List enteries;
+  @override
+  State<DropDownButtonWithTitle> createState() =>
+      _DropDownButtonWithTitleState();
+}
 
-  final String title;
+class _DropDownButtonWithTitleState extends State<DropDownButtonWithTitle> {
+  var soso;
+  @override
+  void initState() {
+    super.initState();
+    soso = widget.enteries[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -23,7 +33,7 @@ class DropDownButtonWithTitle extends StatelessWidget {
           spacing: 5,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(title, textAlign: TextAlign.start),
+            Text(widget.title, textAlign: TextAlign.start),
             Container(
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 229, 213, 255),
@@ -34,14 +44,20 @@ class DropDownButtonWithTitle extends StatelessWidget {
                 maxHeight: MediaQuery.of(context).size.height * 0.04,
               ),
               //child: Text("asdla;md"),
-              child: DropdownButton(
-                underline: SizedBox(),
-                isExpanded: true,
-                items: makeEnteries(enteries),
-                value: value,
-                onChanged: (_value) {
-                  value = _value;
-                },
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: DropdownButton(
+                  underline: SizedBox(),
+                  isExpanded: true,
+                  
+                  items: widget.enteries,
+                  value: soso,
+                  onChanged: (_value) {
+                    setState(() {
+                      soso = _value;
+                    });
+                  },
+                ),
               ),
             ),
           ],
