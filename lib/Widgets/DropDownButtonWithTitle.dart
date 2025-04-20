@@ -21,7 +21,7 @@ class _DropDownButtonWithTitleState extends State<DropDownButtonWithTitle> {
   @override
   void initState() {
     super.initState();
-    soso = widget.enteries[0];
+    soso = widget.enteries[0].value;
   }
 
   @override
@@ -51,7 +51,7 @@ class _DropDownButtonWithTitleState extends State<DropDownButtonWithTitle> {
                   isExpanded: true,
                   
                   items: widget.enteries,
-                  value: soso,
+                  value: soso.toString(),
                   onChanged: (_value) {
                     setState(() {
                       soso = _value;
