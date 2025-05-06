@@ -37,7 +37,7 @@ class _CreatingSchedulesPageState extends State<CreatingSchedulesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("جداول جديدة"),elevation: 2,surfaceTintColor: Colors.grey,backgroundColor: Colors.white, shadowColor: Colors.black,),
+      appBar: AppBar(title: Text("جدول جديدة"),elevation: 2,surfaceTintColor: Colors.grey,backgroundColor: Colors.white, shadowColor: Colors.black,),
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(4)),
@@ -65,7 +65,7 @@ class _CreatingSchedulesPageState extends State<CreatingSchedulesPage> {
                   function:
                       () => Navigator.of(
                         context,
-                      ).push(createRoute("CreateSchedules")),
+                      ).push(createRoute("ChooseSchedule")),
                   textstyle: Theme.of(context).textTheme.headlineMedium?.apply(color: Colors.white),
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedule_me/Pages/choose_schedual.dart';
 import 'package:schedule_me/Pages/home.dart';
 import 'package:schedule_me/Pages/login.dart';
 import 'package:schedule_me/Pages/creating_schedules.dart';
@@ -13,6 +14,8 @@ dynamic createRoute(String selection) {
           return HomePage();
         case "CreateSchedules":
           return CreatingSchedulesPage();
+        case "ChooseSchedule":
+          return ChooseSchedual();
         default:
           return LoginPage();
       }
