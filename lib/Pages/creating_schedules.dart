@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_me/Class/Subject.dart';
+import 'package:schedule_me/Class/TimeOfLecture.dart';
 import 'package:schedule_me/Router.dart';
 import 'package:schedule_me/Widgets/ButtonWithTextandIcon.dart';
 import 'package:schedule_me/Widgets/Container&Title&Subtitle&Button.dart';
@@ -27,7 +28,7 @@ class _CreatingSchedulesPageState extends State<CreatingSchedulesPage> {
   Widget GetSubjects(List fetchedSubjects) {
     List<Widget> widget_list=[];
     for (var subjects in fetchedSubjects) {
-      widget_list.add(ContainerTitleSubtitleButton(SubjectObject: Subject(Name: subjects, Type: "تخصصية اجبارية", Hours: 2),));
+      widget_list.add(ContainerTitleSubtitleButton(SubjectObject: Subject(Name: subjects, Type: "تخصصية اجبارية", Hours: 2,Scedual_Data: new Map<Day,TimeOfLecture>()),));
     }
     var crossAxisCount=(MediaQuery.of(context).size.width/400).round();
     print(crossAxisCount);

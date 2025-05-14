@@ -28,12 +28,22 @@ class _ChooseSchedualState extends State<ChooseSchedual> {
         backgroundColor: Colors.white,
         shadowColor: Colors.black,
       ),
-      body: Column(
-        children: [
-          Expanded(child: MyHomePage()),
-          ColorSceamContainer(subjects_list: []),
-          
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ColorSceamContainer(subjects_list: []),
+            ContainerBox(child: MyApp()),
+            if (false)
+						Center(
+							child: Padding(
+								padding: const EdgeInsets.symmetric(vertical: 8),
+								child: CircularProgressIndicator(
+									color: Colors.green.shade900,
+								),
+							),
+						),
+          ],
+        ),
       ),
     );
   }

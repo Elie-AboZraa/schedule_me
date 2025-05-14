@@ -6,10 +6,13 @@ class ContainerBox extends StatefulWidget {
   final Widget child;
   final TextStyle? titletextstyle;
 
+  final Widget? more_option_button;
+
   const ContainerBox({
     this.title = null,
     required this.child,
     this.titletextstyle,
+    this.more_option_button,
     super.key,
   });
 
@@ -39,19 +42,34 @@ class _ContainerBoxState extends State<ContainerBox> {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10)],
           ),
+
+          //here is the main logic
           child: Column(
             spacing: 10,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(),
-              widget.title == (null)
-                  ? Container()
-                  : 
-                  Text(
-                    widget.title!,
-                    textAlign: TextAlign.center,
-                    style: titletextstyle,
-                  ),
-
+              //dealing with the conflict that if the title and the more option exsist thene they should be in a row  and have aligned space betwean 
+              //else if only the title exsist then the text should be in the center 
+              if (widget.title!=null&&widget.more_option_button!=null)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(),
+                        Text(
+                            widget.title!,
+                            textAlign: TextAlign.center,
+                            style: titletextstyle,
+                          ),
+                          ?widget.more_option_button
+                      ],
+                    )
+                    else if(widget.title!=null)
+                    Text(
+                            widget.title!,
+                            textAlign: TextAlign.center,
+                            style: titletextstyle,
+                          ),
               widget.child,
               Row()
             ],

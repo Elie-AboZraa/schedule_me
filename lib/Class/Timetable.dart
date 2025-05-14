@@ -1,4 +1,4 @@
-import 'Lecture.dart';
+import 'package:schedule_me/Class/Lecture.dart';
 import 'StudentPref.dart';
 
 class Timetable {

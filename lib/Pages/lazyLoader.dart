@@ -1,23 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
-
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Example',
-      home: MyHomePage(title: 'GeeksForGeeks'),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
+import 'package:schedule_me/Widgets/ContainerBox.dart';
+import 'package:schedule_me/Widgets/ScedualCalendar.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({super.key, required this.title});
-
-  final String title;
+  MyHomePage({super.key});
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -59,49 +46,33 @@ class _MyHomePageState extends State<MyHomePage> {
       scrollOffset: 100,
       onEndOfPage: () => _loadMore(),
       child: ListView.builder(
-        shrinkWrap: true,
-       itemCount: data.length,
-        itemBuilder: (context, position) {
-          return DemoItem(position);
+        //shrinkWrap: true,
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return SchedualSkelton(index + 1);
         },
       ),
     );
   }
 }
 
-class DemoItem extends StatelessWidget {
-  final int position;
+class SchedualSkelton extends StatelessWidget {
+  final int index;
 
-  const DemoItem(this.position, {super.key});
+  const SchedualSkelton(this.index, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(color: Colors.deepOrange, height: 40.0, width: 40.0),
-                SizedBox(width: 8.0),
-                Text("Item $position"),
-              ],
-            ),
-            Text(
-              "GeeksforGeeks.org was created with a goal "
-              "in mind to provide well written, well "
-              "thought and well explained solutions for selected"
-              " questions. The core team of five super geeks"
-              " constituting of technology lovers and computer"
-              " science enthusiasts have been constantly working"
-              " in this direction.",
-            ),
-          ],
-        ),
+    return ContainerBox(
+      title: " $index الجدول",
+      more_option_button: IconButton(
+        onPressed: () {},
+        icon: Icon(Icons.more_vert_outlined),
       ),
+      titletextstyle: Theme.of(
+        context,
+      ).textTheme.headlineSmall?.apply(color: Colors.black),
+      child: ScedualCalendar(),
     );
   }
 }

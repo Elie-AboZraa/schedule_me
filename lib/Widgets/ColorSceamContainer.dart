@@ -43,6 +43,7 @@ class ColorSceamContainer extends StatelessWidget {
 
   createColorSceam(context, Subjects) {
     var width = MediaQuery.sizeOf(context).width;
+    var height = MediaQuery.sizeOf(context).height;
     List<Widget> ColorSceam = [];
     List<Widget> tmp = [];
     for (var i = 0; i < Subjects.length; i++) {
@@ -58,12 +59,13 @@ class ColorSceamContainer extends StatelessWidget {
       }
       tmp.add(
         Row(
+          
           spacing: 10,
-
           children: [
             Text(Subjects[i]),
             Container(
-              child: SizedBox(width: width * 0.1, height: width * 0.1),
+              height: height * 0.07,
+              child: SizedBox(width: width * 0.08, height: height * 0.08),
               decoration: BoxDecoration(
                 color: Colors.red,
                 shape: BoxShape.circle,

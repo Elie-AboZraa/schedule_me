@@ -1,8 +1,19 @@
+import 'package:schedule_me/Class/TimeOfLecture.dart';
+enum Day {
+  sunday,monday,tuseday,wednsday,thirsday,friday
+}
 class Subject {
+  //somthing like statistecs not the real data
   String Name;
   String Type;
   int Hours;
-  String get name {
+  
+
+  //the real data that going to be putened in a scedual
+  //basicly we are mapping Saterday : the time of lecture in this day 
+  Map<Day, TimeOfLecture> Scedual_Data;
+
+  String get nameOfSubject {
     return Name;
   }
 
@@ -26,9 +37,10 @@ class Subject {
     Hours = value;
   }
 
-  Subject({ required this.Name,required this.Type,required this.Hours}) {
-    this.Name = name;
-    this.Type = type;
-    this.Hours = hours;
-  }
+  Subject({
+    required this.Name,
+    required this.Type,
+    required this.Hours,
+    required this.Scedual_Data,
+  }) ;
 }
