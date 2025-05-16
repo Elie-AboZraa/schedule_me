@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:schedule_me/Widgets/ButtonWithTextandIcon.dart';
+import 'package:schedule_me/Widgets/SchedualsHistory.dart';
 import 'package:schedule_me/Widgets/StikyTopConatiner.dart';
-import 'package:schedule_me/Helpers/_schedule_managing.dart';
 
 class HomePage extends StatefulWidget {
   final bool? isGuist;
@@ -29,9 +30,9 @@ class _HomePageState extends State<HomePage> {
               child: Stikytopconatiner(),
             ),
           ),
-          Container(child: 
-          schedule_managing(context)
-          ,)
+
+          ButtonWithTextandIcon(text: "جدول جديد",icon: Icons.add,route: "ParsingSchedualFromFile",),
+          SchedualsHistory(),
           
         ],
       ),

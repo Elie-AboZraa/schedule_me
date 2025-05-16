@@ -30,7 +30,7 @@ class _ChooseSchedualState extends State<ChooseSchedual> {
       ),
       body: Column(
         children: [
-          Expanded(child: MyHomePage()),
+          Expanded(child: LazyLoaderListView()),
           ColorSceamContainer(subjects_list: []),
           
         ],

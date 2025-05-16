@@ -4,13 +4,15 @@ import 'package:schedule_me/Router.dart';
 class ButtonWithTextandIcon extends StatelessWidget {
   final String text;
 
-  final dynamic icon;
+  final IconData? icon;
 
   final String route;
 
   final VoidCallback? function;
 
   final TextStyle? textstyle;
+  
+  final ButtonStyle? buttonStyle;
 
   const ButtonWithTextandIcon({
     this.text = "",
@@ -18,13 +20,17 @@ class ButtonWithTextandIcon extends StatelessWidget {
     this.icon,
     this.route = "Home",
     this.function,
+    this.buttonStyle,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple),
+      style: 
+      buttonStyle==(null)?
+      ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple)
+      :buttonStyle,
 
       onPressed:
           function == (null)

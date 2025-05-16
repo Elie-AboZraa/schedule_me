@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:schedule_me/Widgets/ContainerBox.dart';
 import 'package:schedule_me/Widgets/ScedualCalendar.dart';
+import 'package:schedule_me/Widgets/SchedualSkelton.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({super.key});
+class LazyLoaderListView extends StatefulWidget {
+  LazyLoaderListView({super.key});
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _LazyLoaderListViewState createState() => _LazyLoaderListViewState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _LazyLoaderListViewState extends State<LazyLoaderListView> {
   List<int> data = [];
   int currentLength = 0;
 
@@ -33,15 +34,19 @@ class _MyHomePageState extends State<MyHomePage> {
     for (var i = currentLength; i <= currentLength + increment; i++) {
       data.add(i);
     }
+    // preventing an error dou to the parent get disposed and after the timer end the setstat function for the parent get called
+    if(this.mounted){
+
     setState(() {
       isLoading = false;
       currentLength = data.length;
     });
   }
+    }
 
   @override
   Widget build(BuildContext context) {
-    return LazyLoadScrollView(
+    return LazyLoaderScrollView(
       isLoading: isLoading,
       scrollOffset: 100,
       onEndOfPage: () => _loadMore(),
@@ -52,27 +57,6 @@ class _MyHomePageState extends State<MyHomePage> {
           return SchedualSkelton(index + 1);
         },
       ),
-    );
-  }
-}
-
-class SchedualSkelton extends StatelessWidget {
-  final int index;
-
-  const SchedualSkelton(this.index, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ContainerBox(
-      title: " $index الجدول",
-      more_option_button: IconButton(
-        onPressed: () {},
-        icon: Icon(Icons.more_vert_outlined),
-      ),
-      titletextstyle: Theme.of(
-        context,
-      ).textTheme.headlineSmall?.apply(color: Colors.black),
-      child: ScedualCalendar(),
     );
   }
 }
