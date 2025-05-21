@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TextFieldContainer extends StatefulWidget {
-  const TextFieldContainer({super.key, this.type});
+  const TextFieldContainer({super.key, this.type,this.controller});
   final type;
+  final dynamic controller;
+  
   @override
   State<TextFieldContainer> createState() => _TextFieldContainerState();
 }
@@ -58,6 +60,7 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
               contentPadding: EdgeInsets.fromLTRB(4, 0, 10, 0),
               titleAlignment: ListTileTitleAlignment.center,
               title: TextField(
+                controller: widget.controller,
                 maxLines: 1,
                 textDirection: TextDirection.rtl,
                 obscureText: HidePassword,

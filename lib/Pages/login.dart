@@ -13,8 +13,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    final TextEditingController usernameController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
     return Scaffold(
-      
       body: Center(
         child: Container(
           //padding: EdgeInsets.fromLTRB(10, 0, 20, 0),
@@ -31,13 +33,15 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
 
-              TextFieldContainer(),
-              TextFieldContainer(type: "password"),
+              TextFieldContainer(controller: usernameController),
+              TextFieldContainer(type: "password",controller: passwordController),
               Column(
                 spacing: 10,
                 children: [
                   TextButton(
-                    onPressed: ()=>Navigator.of(context).push(createRoute("Home")),
+                    onPressed: () => Navigator.of(
+                      context,
+                    ).push(createRoute(selection: "Home",data: {"success":false})),
                     child: Text(
                       "دخول من دون مستخدم",
                       style: Theme.of(context).textTheme.titleSmall?.apply(
@@ -45,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  SubmitButton(),
+                  SubmitButton(username: usernameController,password: passwordController,),
                 ],
               ),
             ],

@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:schedule_me/Widgets/ImageParser.dart';
 
 class Stikytopconatiner extends StatelessWidget {
-  final String? ClientInfo;
-  const Stikytopconatiner({this.ClientInfo,super.key});
+  final Map? clientInfo;
+  const Stikytopconatiner({this.clientInfo,super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(left: 10,right: 10),
       height: MediaQuery.of(context).size.height * 0.10,
       width: double.infinity,
       decoration: BoxDecoration(
@@ -17,14 +21,10 @@ class Stikytopconatiner extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
+          Row(spacing: 10,
             children: [
-              Icon(Icons.person),
-              Text(115641.toString()),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.notifications_none),
-              ),
+              ImageNetworkParser(clientInfo: clientInfo,),
+                Text(clientInfo!["data"]["USERNAME"].toString()),
             ],
           ),
           IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz)),

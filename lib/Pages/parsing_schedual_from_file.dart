@@ -32,7 +32,7 @@ class ParsingSchedualFromFile extends StatelessWidget {
             ),
           ),
            FutureBuilder(
-      future: getCacheFiles(subDirectory: "/DownloadedSchedules"),
+      future: getCacheFiles(subDirectory: "/Downloaded-Schedules",fileExtention: ".xlsx"),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting ||
             snapshot.data == null) {
@@ -41,7 +41,7 @@ class ParsingSchedualFromFile extends StatelessWidget {
           return Text("Error");
         } else if (snapshot.hasData) {
           return Column(
-            children: ListViewFromFiles(snapshot.data as List<File>,"لا يوجد ملفات محفوظة "),
+            children: ListViewFromFiles(context,snapshot.data as List<File>,"لا يوجد ملفات محفوظة "),
           );
         }
         return Text("ss");

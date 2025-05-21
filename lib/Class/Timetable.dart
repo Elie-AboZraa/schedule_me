@@ -10,6 +10,15 @@ class Timetable {
     }
   }
 
+  void addAllLecture(List<Lecture> lecture) {
+    for (var item in lecture) {
+        _lectures.add(item);
+      /*if (!_hasConflict(item)) {
+        _lectures.add(item);
+      }*/
+    }
+  }
+
   bool _hasConflict(Lecture newLecture) {
     return _lectures.any((lecture) => lecture.conflictsWith(newLecture));
   }

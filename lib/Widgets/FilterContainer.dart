@@ -30,7 +30,6 @@ class _FilterContainerState extends State<FilterContainer> {
       default:
        // options = [];
     }
-    print(options);
     return DropDownButtonWithTitle(enteries: makeEnteries(options), title: Title);
   }
 

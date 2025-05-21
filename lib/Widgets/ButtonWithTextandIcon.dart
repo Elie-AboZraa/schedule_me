@@ -34,7 +34,7 @@ class ButtonWithTextandIcon extends StatelessWidget {
 
       onPressed:
           function == (null)
-              ? () => Navigator.of(context).push(createRoute(route))
+              ? () => Navigator.of(context).push(createRoute(selection: route))
               : function,
       child: Padding(
         padding: const EdgeInsets.only(top: 3.0,bottom: 3.0),

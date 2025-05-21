@@ -4,8 +4,8 @@ import 'package:schedule_me/Widgets/SchedualsHistory.dart';
 import 'package:schedule_me/Widgets/StikyTopConatiner.dart';
 
 class HomePage extends StatefulWidget {
-  final bool? isGuist;
-  const HomePage({this.isGuist,super.key});
+    final dynamic PassedData;
+  const HomePage({this.PassedData,super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(top: 16),
               width: MediaQuery.of(context).size.width*0.90,
               
-              child: Stikytopconatiner(),
+              child: Stikytopconatiner(clientInfo:  widget.PassedData),
             ),
           ),
 
