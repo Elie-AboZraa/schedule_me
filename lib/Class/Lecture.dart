@@ -48,6 +48,11 @@ class Lecture {
     this.lecturer,
   });
 
+  @override
+  String toString() {
+    return '$subject (Sec $section) - $day ${time.start}-${time.end}';
+  }
+
   bool conflictsWith(Lecture other) {
     return day == other.day && time.overlapsWith(other.time);
   }
