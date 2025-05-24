@@ -1,8 +1,9 @@
 import 'dart:io';
+import 'package:schedule_me/Class/Lecture.dart';
+import 'package:schedule_me/Class/TimeRange.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
-import 'Class Diagram and the code for it/Lecture.dart';
-import 'Class Diagram and the code for it/TimeRange.dart';
+
 
 class PdfParser {
   static Future<List<Lecture>> parseSchedule(String pdfPath) async {
