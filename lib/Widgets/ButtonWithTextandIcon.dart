@@ -13,12 +13,15 @@ class ButtonWithTextandIcon extends StatelessWidget {
   final TextStyle? textstyle;
   
   final ButtonStyle? buttonStyle;
+  
+  final dynamic PassedData;
 
   const ButtonWithTextandIcon({
     this.text = "",
     this.textstyle,
     this.icon,
-    this.route = "Home",
+    this.route = "Login",
+    this.PassedData,
     this.function,
     this.buttonStyle,
     super.key,
@@ -34,7 +37,7 @@ class ButtonWithTextandIcon extends StatelessWidget {
 
       onPressed:
           function == (null)
-              ? () => Navigator.of(context).push(createRoute(selection: route))
+              ? () => Navigator.of(context).push(createRoute(selection: route,data: PassedData))
               : function,
       child: Padding(
         padding: const EdgeInsets.only(top: 3.0,bottom: 3.0),

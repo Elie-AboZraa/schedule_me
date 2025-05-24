@@ -15,12 +15,11 @@ dynamic createRoute({required String selection,dynamic data}) {
         case "Home":
           return HomePage(PassedData: data,);
         case "ParsingSchedualFromFile":
-          return ParsingSchedualFromFile();
+          return ParsingSchedualFromFile(PassedData: data,);
         case "CreateSchedules":
-          return CreatingSchedulesPage(fetchedFile: data,);
+          return CreatingSchedulesPage(fetchedSchedules: data,);
         case "ChooseSchedule":
           return ChooseSchedual();
-          
         default:
           return LoginPage();
       }

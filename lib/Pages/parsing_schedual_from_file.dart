@@ -1,14 +1,48 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:schedule_me/Helpers/NetworkConnections/_GetLectureFromTheServer.dart';
+import 'package:schedule_me/Helpers/NetworkConnections/_GetLectureRequest.dart';
+import 'package:schedule_me/Helpers/NetworkConnections/_processRequestedData.dart';
 import 'package:schedule_me/Helpers/_ListViewFromFiles.dart';
 import 'package:schedule_me/Helpers/_FilePicker.dart';
 import 'package:schedule_me/Helpers/getCacheFiles.dart';
+import 'package:schedule_me/Router.dart';
 import 'package:schedule_me/Widgets/ButtonWithTextandIcon.dart';
 import 'package:schedule_me/Widgets/ContainerBox.dart';
 
-class ParsingSchedualFromFile extends StatelessWidget {
-  const ParsingSchedualFromFile({super.key});
+class ParsingSchedualFromFile extends StatefulWidget {
+  final dynamic PassedData;
+
+  const ParsingSchedualFromFile({super.key,this.PassedData});
+
+  @override
+  State<ParsingSchedualFromFile> createState() => _ParsingSchedualFromFileState();
+}
+
+class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
+  dynamic _result; 
+ // To store the result from the Future
+  bool _isLoading = false; 
+ // Optional: Show loading indicator
+
+  void _runFuture() async {
+        setState(() {
+      _isLoading = true;
+    });
+     _result = await GetLectureRequest(widget.PassedData); // Run the future
+
+        setState(() {
+      _isLoading = false;
+    });
+    if (_result["success"]==true){
+      print(_result);
+      var tmp=processRequestedData(_result);
+     Navigator.of(context).push(createRoute(selection: "CreateSchedules",data: tmp));
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,34 +54,70 @@ class ParsingSchedualFromFile extends StatelessWidget {
         backgroundColor: Colors.white,
         shadowColor: Colors.black,
       ),
-      body: Column(
-        children: [
-          ContainerBox(
-            child: ButtonWithTextandIcon(
-              //To-Do change the Text here 
-              text: "اضف الملف الموفر من الموقع",
-              icon: Icons.add,
-              function: FilePicker,
-              buttonStyle: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 0, 94, 66)),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Column(
+          children: [
+            ContainerBox(
+              title: "اختر مصدر الجداول",
+              titletextstyle: Theme.of(
+                context,
+              ).textTheme.titleLarge?.apply(color: Colors.black),
+              
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  spacing: 10,
+                  children: [
+                    ButtonWithTextandIcon(
+                      //To-Do change the Text here
+                      text: " من ملف موفر ",
+                      icon: Icons.add,
+                      function: FilePicker,
+                      buttonStyle: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 0, 94, 66),
+                      ),
+                    ),
+                    ButtonWithTextandIcon(
+                      //To-Do change the Text here
+                      text: " من موقع الجامعة ",
+                      icon: Icons.add,
+                      function: _isLoading ? null : _runFuture,
+                      buttonStyle: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 0, 94, 66),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-           FutureBuilder(
-      future: getCacheFiles(subDirectory: "/Downloaded-Schedules",fileExtention: ".xlsx"),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting ||
-            snapshot.data == null) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Text("Error");
-        } else if (snapshot.hasData) {
-          return Column(
-            children: ListViewFromFiles(context,snapshot.data as List<File>,"لا يوجد ملفات محفوظة "),
-          );
-        }
-        return Text("ss");
-      },
-    )
-        ],
+            FutureBuilder(
+              future: getCacheFiles(
+                subDirectory: "/Downloaded-Schedules",
+                fileExtention: ".xlsx",
+              ),
+              //To-Do convet this builder to a widget
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting ||
+                    snapshot.data == null) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Text("Error");
+                } else if (snapshot.hasData) {
+                  return Column(
+                    children: ListViewFromFiles(
+                      context,
+                      snapshot.data as List<File>,
+                      "لا يوجد ملفات محفوظة ",
+                    ),
+                  );
+                }
+                return Text("Big Error");
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

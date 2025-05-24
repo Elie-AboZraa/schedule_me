@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:schedule_me/Widgets/ImageParser.dart';
 
@@ -24,6 +22,7 @@ class Stikytopconatiner extends StatelessWidget {
           Row(spacing: 10,
             children: [
               ImageNetworkParser(clientInfo: clientInfo,),
+              if(clientInfo!=null)
                 Text(clientInfo!["data"]["USERNAME"].toString()),
             ],
           ),

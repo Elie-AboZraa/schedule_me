@@ -9,7 +9,6 @@ class ImageNetworkParser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (clientInfo != null) {
-      print(clientInfo!["data"]["EXTRA"]["PICTURE"].toString().trim());
       return CircleAvatar(
         backgroundColor: Colors.white,
         child: ClipOval(

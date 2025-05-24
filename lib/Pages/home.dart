@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          ButtonWithTextandIcon(text: "جدول جديد",icon: Icons.add,route: "ParsingSchedualFromFile",),
+          ButtonWithTextandIcon(text: "جدول جديد",icon: Icons.add,route: "ParsingSchedualFromFile",PassedData: widget.PassedData,),
           SchedualsHistory(),
           
         ],

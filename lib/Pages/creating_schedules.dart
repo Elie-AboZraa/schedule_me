@@ -12,9 +12,9 @@ import 'package:schedule_me/Widgets/FilterContainer.dart';
 import 'package:schedule_me/Widgets/CoustomeGridView.dart';
 
 class CreatingSchedulesPage extends StatefulWidget {  
-  final File? fetchedFile;
+  final dynamic fetchedSchedules;
 
-  const CreatingSchedulesPage({this.fetchedFile,super.key});
+  const CreatingSchedulesPage({this.fetchedSchedules,super.key});
   @override
   State<CreatingSchedulesPage> createState() => _CreatingSchedulesPageState();
 }
@@ -41,13 +41,14 @@ class _CreatingSchedulesPageState extends State<CreatingSchedulesPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.fetchedFile==null){
-    CreateSchedualsFromExcel(widget.fetchedFile!,);
+    /*if (widget.fetchedSchedules==null){
+    CreateSchedualsFromExcel(widget.fetchedSchedules!,);
     }else{
       const Duration(seconds: 2);
-          CreateSchedualsFromExcel(widget.fetchedFile!,);
+          CreateSchedualsFromExcel(widget.fetchedSchedules!,);
 
-    }
+    }*/
+    print(widget.fetchedSchedules);
     return Scaffold(
       appBar: AppBar(title: Text("جدول جديدة"),elevation: 2,surfaceTintColor: Colors.grey,backgroundColor: Colors.white, shadowColor: Colors.black,),
       body: SingleChildScrollView(
