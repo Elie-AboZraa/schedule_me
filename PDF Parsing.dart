@@ -1,19 +1,22 @@
-import 'package:pdf_text/pdf_text.dart';
+import 'dart:io';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 import 'Class Diagram and the code for it/Lecture.dart';
 import 'Class Diagram and the code for it/TimeRange.dart';
 
 class PdfParser {
   static Future<List<Lecture>> parseSchedule(String pdfPath) async {
-  try {
-    final pdfDoc = await PDFDoc.fromPath(pdfPath); // This should now work
-    final text = await pdfDoc.text;
-    return _parseArabicSchedule(text);
-  } catch (e) {
-    print('PDF Parsing Error: $e');
-    return [];
+    try {
+      final bytes = File(pdfPath).readAsBytesSync();
+      final PdfDocument document = PdfDocument(inputBytes: bytes);
+      final String text = PdfTextExtractor(document).extractText();
+      document.dispose();
+      return _parseArabicSchedule(text);
+    } catch (e) {
+      print('PDF Parsing Error: $e');
+      return [];
+    }
   }
-}
 
   static List<Lecture> _parseArabicSchedule(String text) {
     final lines = text.split('\n');
@@ -23,26 +26,22 @@ class PdfParser {
     String? currentLocation;
 
     for (final line in lines) {
-      // Detect day headers (e.g., "Saturday", "Sunday")
       if (_isDayHeader(line)) {
         currentDay = _normalizeDay(line);
         continue;
       }
 
-      // Detect time slots (e.g., "8:00-10:00")
       final timeRange = _parseTimeRange(line);
       if (timeRange != null) {
         currentTimeRange = timeRange;
         continue;
       }
 
-      // Detect location (room numbers)
       if (_isLocation(line)) {
         currentLocation = line.trim();
         continue;
       }
 
-      // Parse lecture lines (Arabic text with section numbers)
       if (currentDay.isNotEmpty && currentTimeRange != null && _isLectureLine(line)) {
         lectures.add(_createLecture(
           line: line,
@@ -56,11 +55,10 @@ class PdfParser {
     return lectures;
   }
 
-  // Helper methods
   static bool _isDayHeader(String line) {
     return line.trim().toLowerCase().contains('day') ||
         ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday']
-            .any((day) => line.trim().toLowerCase().contains(day.toLowerCase()));
+            .any((day) => line.trim().toLowerCase().contains(day));
   }
 
   static String _normalizeDay(String dayLine) {
@@ -78,7 +76,7 @@ class PdfParser {
   }
 
   static bool _isLocation(String line) {
-    return RegExp(r'^\d{4}$').hasMatch(line.trim()) || 
+    return RegExp(r'^\d{4}$').hasMatch(line.trim()) ||
            line.trim().startsWith('مخبر');
   }
 
@@ -95,10 +93,8 @@ class PdfParser {
     required TimeRange timeRange,
     required String? location,
   }) {
-    // Extract subject and section (e.g., "الخوارزميات وبنى المعطيات ش1")
     final sectionMatch = RegExp(r'ش(\d+)').firstMatch(line);
     final section = sectionMatch?.group(1) ?? '1';
-    
     final subject = line.replaceAll(RegExp(r'ش\d+'), '').trim();
 
     return Lecture(
