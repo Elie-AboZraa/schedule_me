@@ -1,4 +1,4 @@
-class StudentPref {
+/*class StudentPref {
   final int _maxDays;
   final List<String> _preferredDays;
   final bool _avoidBackToBack;
@@ -15,4 +15,15 @@ class StudentPref {
   int get maxDays => _maxDays;
   List<String> get preferredDays => _preferredDays;
   bool get avoidBackToBack => _avoidBackToBack;
+}*/
+class StudentPref {
+  final int maxDays;
+  final List<String> preferredDays;
+  final bool avoidBackToBack;
+
+  StudentPref({
+    required this.maxDays,
+    required this.preferredDays,
+    required this.avoidBackToBack,
+  });
 }

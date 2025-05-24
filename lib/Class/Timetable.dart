@@ -1,7 +1,7 @@
 import 'package:schedule_me/Class/Lecture.dart';
 import 'StudentPref.dart';
 
-class Timetable {
+/*class Timetable {
   final List<Lecture> _lectures = [];
 
   void addLecture(Lecture lecture) {
@@ -30,4 +30,21 @@ class Timetable {
 
   // Public getter
   List<Lecture> get lectures => List.unmodifiable(_lectures);
+}*/
+// lib/core/services/timetable.dart
+class Timetable {
+  final List<Lecture> lectures = [];
+
+  // Change from _hasConflict to hasConflict (remove underscore)
+  bool hasConflict(Lecture newLecture) {
+    return lectures.any((l) => l.conflictsWith(newLecture));
+  }
+
+  void addLecture(Lecture lecture) {
+    if (!hasConflict(lecture)) {  // Update this line too
+      lectures.add(lecture);
+    }
+  }
+
+  int get totalDays => lectures.map((l) => l.day).toSet().length;
 }

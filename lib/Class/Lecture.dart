@@ -1,6 +1,6 @@
 import 'TimeRange.dart';
 
-class Lecture {
+/*class Lecture {
   final String _subject;
   //final String _section;
   final String _day;
@@ -29,5 +29,31 @@ class Lecture {
 
   bool conflictsWith(Lecture other) {
     return _day == other._day && _time.overlapsWith(other._time);
+  }
+}*/
+class Lecture {
+  final String subject;
+  final String section;
+  final String day;
+  final TimeRange time;
+  final String? location;
+  final String? lecturer;
+
+  Lecture({
+    required this.subject,
+    required this.section,
+    required this.day,
+    required this.time,
+    this.location,
+    this.lecturer,
+  });
+
+  @override
+  String toString() {
+    return '$subject (Sec $section) - $day ${time.start}-${time.end}';
+  }
+
+  bool conflictsWith(Lecture other) {
+    return day == other.day && time.overlapsWith(other.time);
   }
 }
