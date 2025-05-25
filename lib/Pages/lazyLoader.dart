@@ -46,7 +46,7 @@ class _LazyLoaderListViewState extends State<LazyLoaderListView> {
 
   @override
   Widget build(BuildContext context) {
-    return LazyLoaderScrollView(
+    return LazyLoadScrollView(
       isLoading: isLoading,
       scrollOffset: 100,
       onEndOfPage: () => _loadMore(),

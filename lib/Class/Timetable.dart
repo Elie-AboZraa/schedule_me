@@ -45,6 +45,14 @@ class Timetable {
       lectures.add(lecture);
     }
   }
+    void addAllLecture(List<Lecture> lecture) {
+    for (var item in lecture) {
+        lectures.add(item);
+      /*if (!_hasConflict(item)) {
+        _lectures.add(item);
+      }*/
+    }
+  }
 
   int get totalDays => lectures.map((l) => l.day).toSet().length;
 }
