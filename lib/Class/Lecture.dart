@@ -1,5 +1,5 @@
 import 'TimeRange.dart';
-
+//v1
 /*class Lecture {
   final String _subject;
   //final String _section;
@@ -31,7 +31,9 @@ import 'TimeRange.dart';
     return _day == other._day && _time.overlapsWith(other._time);
   }
 }*/
-class Lecture {
+
+//v2
+/*class Lecture {
   final String subject;
   final String section;
   final String day;
@@ -56,4 +58,26 @@ class Lecture {
   bool conflictsWith(Lecture other) {
     return day == other.day && time.overlapsWith(other.time);
   }
+}*/
+//v3
+// lib/classes/Lecture.dart
+class Lecture {
+  final String subject;
+  final String teacher;
+  final String academicTime;
+  final String classroom;
+  final String day;
+
+  Lecture({
+    required this.subject,
+    required this.teacher,
+    required this.academicTime,
+    required this.classroom,
+    required this.day,
+  });
+
+  // Optional: Override toString() for debugging
+  @override
+  String toString() => 
+      'Lecture($subject, $teacher, $academicTime, $classroom, $day)';
 }
