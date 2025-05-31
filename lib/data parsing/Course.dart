@@ -1,4 +1,4 @@
-import 'package:schedule_me/data%20parsing/Group%20Class.dart';
+import 'package:schedule_me/data%20parsing/Group.dart';
 
 class Course {
   final String? courseCode;

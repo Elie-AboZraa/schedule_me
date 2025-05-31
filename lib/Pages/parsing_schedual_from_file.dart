@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:schedule_me/Helpers/NetworkConnections/_GetLectureFromTheServer.dart';
 import 'package:schedule_me/Helpers/NetworkConnections/_GetLectureRequest.dart';
 import 'package:schedule_me/Helpers/NetworkConnections/_processRequestedData.dart';
 import 'package:schedule_me/Helpers/_ListViewFromFiles.dart';

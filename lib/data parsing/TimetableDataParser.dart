@@ -1,5 +1,5 @@
-import 'package:schedule_me/data%20parsing/Course%20Class.dart';
-import 'package:schedule_me/data%20parsing/Group%20Class.dart';
+import 'package:schedule_me/data%20parsing/Course.dart';
+import 'package:schedule_me/data%20parsing/Group.dart';
 
 class TimetableDataParser {
   final List<Course> courses;

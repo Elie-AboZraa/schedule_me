@@ -41,8 +41,15 @@ class Timetable {
   }
 
   void addLecture(Lecture lecture) {
-    if (!hasConflict(lecture)) {  // Update this line too
+    if (!hasConflict(lecture)) {
+      // Update this line too
       lectures.add(lecture);
+    }
+  }
+
+  void addAllLecture(List<Lecture> list) {
+    for (var element in list) {
+      lectures.add(element);
     }
   }
 
