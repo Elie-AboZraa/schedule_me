@@ -47,7 +47,7 @@ CreateLectures(List<String?> row, day, location, timerange) {
    List<Lecture> Lecture_list=[];
    for (var subject in row){
     if(subject!=null)
-        {Lecture_list.add(Lecture(subject: subject, day: day, location: location, time: timerange,section: ""));
+        {Lecture_list.add(Lecture(subject: subject, day: day, classroom: location, academicTime: timerange,teacher: ""));
    }}
    if (Lecture_list.isNotEmpty) {
      return Lecture_list;
