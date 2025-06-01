@@ -92,22 +92,19 @@ class Lecture {
   DateTime _parseSingleTime(String time) {
     final components = time.split(':');
     final hour = int.parse(components[0]);
-    final minute = int.parse(components[1]);
-    
-    // Using arbitrary date (2000-01-01) since we only care about time
+    final minute = components.length > 1 ? int.parse(components[1]) : 0;
     return DateTime(2000, 1, 1, hour, minute);
   }
 
   /// Checks if this lecture conflicts with another lecture
   bool conflictsWith(Lecture other) {
-    if (this.day != other.day) return false; // Different days = no conflict
+    if (this.day != other.day) return false;
     
     final thisTime = _parseTime(this.academicTime);
     final otherTime = _parseTime(other.academicTime);
     
-    if (thisTime.isEmpty || otherTime.isEmpty) return false; // Invalid times
+    if (thisTime.isEmpty || otherTime.isEmpty) return false;
     
-    // Check for time overlap
     return thisTime[0].isBefore(otherTime[1]) && 
            thisTime[1].isAfter(otherTime[0]);
   }
