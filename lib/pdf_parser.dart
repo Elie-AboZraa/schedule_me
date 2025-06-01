@@ -11,10 +11,8 @@ Schedule parsePdfContent(List<String> lines) {
   String? currentDay;
   String? currentAcademicTime;
 
-  // Day markers in the PDF
   const dayMarkers = ['Sunday', 'Monday', 'Teusday', 'Saturday'];
-  // Classroom regex (4 digits or "مخبر")
-  final classroomRegex = RegExp(r'(\d{4}|مخبر \w+)');
+  final classroomRegex = RegExp(r'(\d{4}|مخبر \w+|هندية)');
 
   for (int i = 0; i < lines.length; i++) {
     final line = lines[i].trim();
@@ -25,13 +23,13 @@ Schedule parsePdfContent(List<String> lines) {
       continue;
     }
 
-    // 2. Detect academic time slots (e.g., "8:00-10:00")
+    // 2. Detect academic time slots
     if (line.contains(RegExp(r'^\d{1,2}:\d{2}-\d{1,2}:\d{2}'))) {
       currentAcademicTime = line;
       continue;
     }
 
-    // 3. Extract subject (Arabic text) and teacher
+    // 3. Extract subject (Arabic text)
     if (line.contains(RegExp(r'[\u0600-\u06FF]'))) {
       final subject = line;
       String? teacher;
@@ -40,9 +38,15 @@ Schedule parsePdfContent(List<String> lines) {
       // Look ahead 1-3 lines for teacher/classroom
       for (int j = i + 1; j < i + 4 && j < lines.length; j++) {
         final nextLine = lines[j].trim();
-        if (nextLine.startsWith('د.') || nextLine.startsWith('م.')) {
+        
+        // Check for teacher prefix
+        if (nextLine.startsWith('د.') || 
+            nextLine.startsWith('م.') || 
+            nextLine.startsWith('هـ.ت')) {
           teacher = nextLine;
-        } else if (classroomRegex.hasMatch(nextLine)) {
+        }
+        // Check for classroom code
+        else if (classroomRegex.hasMatch(nextLine)) {
           classroom = classroomRegex.firstMatch(nextLine)?.group(0);
         }
       }
