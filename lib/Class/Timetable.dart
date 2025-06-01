@@ -46,6 +46,14 @@ class Timetable {
       lectures.add(lecture);
     }
   }
+    void addAllLecture(List<Lecture> lecture) {
+    for (var item in lecture) {
+        lectures.add(item);
+      /*if (!_hasConflict(item)) {
+        _lectures.add(item);
+      }*/
+    }
+  }
 
   void addAllLecture(List<Lecture> list) {
     for (var element in list) {
