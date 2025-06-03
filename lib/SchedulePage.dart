@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:schedule_me/pdf_parser.dart';
-import 'package:path_provider/path_provider.dart';
 import 'dart:io';
+import 'package:schedule_me/pdf_parser.dart';
+
 
 class SchedulePage extends StatefulWidget {
   @override
@@ -20,17 +19,13 @@ class _SchedulePageState extends State<SchedulePage> {
   }
 
   Future<Schedule> _loadSchedule() async {
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File('${dir.path}/schedule.txt');
-    
+    //final dir = await getApplicationDocumentsDirectory();
+    //final file = File('${dir.path}/schedule.txt');
+
     // If file doesn't exist, create it from assets
-    if (!await file.exists()) {
-      final data = await rootBundle.load('assets/schedule.pdf');
-      await file.writeAsBytes(data.buffer.asUint8List());
-    }
-    
-    final lines = await file.readAsLines();
-    return parsePdfContent(lines);
+    final file = await File("schedule.pdf");
+    final lines = await file.readAsString();
+    return PdfParser.parsePdfContent(lines);
   }
 
   @override
@@ -41,7 +36,7 @@ class _SchedulePageState extends State<SchedulePage> {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           final schedule = snapshot.data!;
-          
+
           return ListView.builder(
             itemCount: schedule.lectures.length,
             itemBuilder: (context, index) {

@@ -1,5 +1,6 @@
 import 'dart:io';
-import 'package:schedule_me/class/Lecture.dart';
+import 'package:schedule_me/Class/Lecture.dart';
+import 'package:schedule_me/Class/Lecture.dart';
 
 /// Lightweight alternative to parse schedule.txt directly
 Future<List<Lecture>> extractLecturesFromText(String filePath) async {

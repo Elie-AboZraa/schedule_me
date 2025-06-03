@@ -30,7 +30,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-    #pdf_text: ^0.9.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   syncfusion_flutter_pdf: ^24.1.41
@@ -41,8 +40,7 @@ dependencies:
   path_provider: ^2.1.5
   path: ^1.9.0
   file_picker: ^5.2.5 # For file selection
-  pdf_text: ^0.9.0     # For PDF parsing
-  fluttertoast: ^8.2.2 # For error messages
+  fluttertoast: ^8.2.12 # For error messages
 
 dev_dependencies:
   flutter_test:

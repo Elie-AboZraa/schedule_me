@@ -1,23 +1,23 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:schedule_me/Pages/home.dart';
+import 'package:schedule_me/Class/Lecture.dart';
 import 'package:schedule_me/Pages/login.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:schedule_me/Pages/test-connection.dart';
-import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:schedule_me/pdf_parser.dart';
-import 'package:schedule_me/class/Lecture.dart'; 
 
 void main() {
-  runApp( ScheduleMe());
+  //runApp( ScheduleMe());
+  WidgetsFlutterBinding.ensureInitialized();
   test('Parses lectures correctly', () async {
-    final file = File('test/schedule.txt');
-    final lines = await file.readAsLines();
-    final schedule = parsePdfContent(lines);
+    final Schedule schedule = await PdfParser.parsePdfContent("schedual.pdf");
 
     // Verify the first lecture
     expect(schedule.lectures.first, isA<Lecture>()); // Uses YOUR Lecture class
     print(schedule.lectures.first);
+    File("the_output_of_The_FUCKING_PARSING.json").writeAsString( jsonEncode(schedule.toJson()));
   });
 }
 

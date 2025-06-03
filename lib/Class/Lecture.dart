@@ -74,7 +74,6 @@ class Lecture {
     required this.classroom,
     required this.day,
   });
-
   /// Parses time string (e.g., "8:00-10:00") into DateTime ranges
   List<DateTime> _parseTime(String timeString) {
     final parts = timeString.split('-');
@@ -112,5 +111,14 @@ class Lecture {
   @override
   String toString() {
     return 'Lecture($subject, $teacher, $academicTime, $classroom, $day)';
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'subject': subject,
+      'academicTime': academicTime.toString(),
+      'teacher': teacher.toString(),
+      'classroom': classroom.toString(),
+      'day': day.toString(),
+    };
   }
 }

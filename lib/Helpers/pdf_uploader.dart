@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:schedule_me/Class/Lecture.dart';
-import 'package:schedule_me/Helpers/_FilePicker.dart';
-import '../utils/pdf_parser.dart';
+import 'package:schedule_me/pdf_parser.dart';
 
 class PdfUploader extends StatefulWidget {
   final Function(List<Lecture>) onPdfParsed;
@@ -32,7 +31,8 @@ class _PdfUploaderState extends State<PdfUploader> {
         _fileName = result.files.single.name;
         final filePath = result.files.single.path!;
         
-        final lectures = await PdfParser.parseSchedule(filePath);
+        final Schedule schedule = await PdfParser.parsePdfContent(filePath);
+        var lectures=schedule.lectures;
         if (lectures.isNotEmpty) {
           widget.onPdfParsed(lectures);
           Fluttertoast.showToast(
@@ -66,7 +66,7 @@ class _PdfUploaderState extends State<PdfUploader> {
           onPressed: _isLoading ? null : _pickAndParsePdf,
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        ),
+        )),
         if (_fileName != null) 
           Padding(
             padding: EdgeInsets.only(top: 8),
