@@ -40,6 +40,9 @@ dependencies:
   excel: ^4.0.6
   path_provider: ^2.1.5
   path: ^1.9.0
+  file_picker: ^5.2.5 # For file selection
+  pdf_text: ^0.9.0     # For PDF parsing
+  fluttertoast: ^8.2.2 # For error messages
 
 dev_dependencies:
   flutter_test:
