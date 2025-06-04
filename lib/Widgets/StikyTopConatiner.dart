@@ -22,7 +22,7 @@ class Stikytopconatiner extends StatelessWidget {
           Row(spacing: 10,
             children: [
               ImageNetworkParser(clientInfo: clientInfo,),
-              if(clientInfo!=null)
+              if(clientInfo!=null&&clientInfo!=[])
                 Text(clientInfo!["data"]["USERNAME"].toString()),
             ],
           ),
