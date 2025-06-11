@@ -30,7 +30,7 @@ class _FilterContainerState extends State<FilterContainer> {
       default:
        // options = [];
     }
-    return DropDownButtonWithTitle(enteries: makeEnteries(options), title: Title);
+    return DropDownButtonWithTitle(enteries: makeEnteries(options), title: Title,ID: "s",sharedDataFunction: (dynamic s){},);
   }
 
   void _onStateChanged() {

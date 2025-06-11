@@ -1,6 +1,4 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:schedule_me/Class/Subject.dart';
 import 'package:schedule_me/Widgets/ContainerBox.dart';
 
 class ColorSceamContainer extends StatelessWidget {

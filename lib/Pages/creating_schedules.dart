@@ -1,20 +1,20 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:schedule_me/Class/Subject.dart';
-import 'package:schedule_me/Class/TimeOfLecture.dart';
-import 'package:schedule_me/Helpers/_CreateSchedualsFromExcel.dart.back';
+import 'package:schedule_me/Class/SubjectTable.dart';
+import 'package:schedule_me/Helpers/_CreateSchedualsFromExcel.dart';
 import 'package:schedule_me/Router.dart';
 import 'package:schedule_me/Widgets/ButtonWithTextandIcon.dart';
 import 'package:schedule_me/Widgets/Container&Title&Subtitle&Button.dart';
 import 'package:schedule_me/Widgets/ContainerBox.dart';
 import 'package:schedule_me/Widgets/FilterContainer.dart';
 import 'package:schedule_me/Widgets/CoustomeGridView.dart';
+import 'package:schedule_me/Widgets/SubjectTableGridView.dart';
 
-class CreatingSchedulesPage extends StatefulWidget {  
+class CreatingSchedulesPage extends StatefulWidget {
   final dynamic fetchedSchedules;
 
-  const CreatingSchedulesPage({this.fetchedSchedules,super.key});
+  const CreatingSchedulesPage({this.fetchedSchedules, super.key});
   @override
   State<CreatingSchedulesPage> createState() => _CreatingSchedulesPageState();
 }
@@ -30,14 +30,7 @@ class _CreatingSchedulesPageState extends State<CreatingSchedulesPage> {
 
   var icon = Icons.heart_broken;
 
-  Widget GetSubjects(List fetchedSubjects) {
-    List<Widget> widget_list=[];
-    for (var subjects in fetchedSubjects) {
-      widget_list.add(ContainerTitleSubtitleButton(SubjectObject: Subject(Name: subjects, Type: "تخصصية اجبارية", Hours: 2,Scedual_Data: new Map<Day,TimeOfLecture>()),));
-    }
-    var crossAxisCount=(MediaQuery.of(context).size.width/400).round();
-    return CustomGridView(children: widget_list, crossAxisCount: crossAxisCount);
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +41,15 @@ class _CreatingSchedulesPageState extends State<CreatingSchedulesPage> {
           CreateSchedualsFromExcel(widget.fetchedSchedules!,);
 
     }*/
-    print(widget.fetchedSchedules);
+    var chosenScheduals=[];
     return Scaffold(
-      appBar: AppBar(title: Text("جدول جديدة"),elevation: 2,surfaceTintColor: Colors.grey,backgroundColor: Colors.white, shadowColor: Colors.black,),
+      appBar: AppBar(
+        title: Text("جدول جديدة"),
+        elevation: 2,
+        surfaceTintColor: Colors.grey,
+        backgroundColor: Colors.white,
+        shadowColor: Colors.black,
+      ),
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(4)),
@@ -63,23 +62,18 @@ class _CreatingSchedulesPageState extends State<CreatingSchedulesPage> {
               ),
               ContainerBox(
                 title: "اختر المواد التي تريد دراستها",
-                child: GetSubjects([
-                  "soso al rakasa",
-                  "software2",
-                  "itw",
-                  "soso al rakasa",
-                  "software2",
-                  "itw",
-                ]),
+                child: SubjectTableGridView(fetchedSubjects: [widget.fetchedSchedules],chosenScheduals: chosenScheduals),
+                
               ),
               ContainerBox(
                 child: ButtonWithTextandIcon(
                   text: "جدول",
-                  function:
-                      () => Navigator.of(
-                        context,
-                      ).push(createRoute(selection: "ChooseSchedule")),
-                  textstyle: Theme.of(context).textTheme.headlineMedium?.apply(color: Colors.white),
+                  function: () => Navigator.of(
+                    context,
+                  ).push(createRoute(selection: "ChooseSchedule")),
+                  textstyle: Theme.of(
+                    context,
+                  ).textTheme.headlineMedium?.apply(color: Colors.white),
                 ),
               ),
             ],

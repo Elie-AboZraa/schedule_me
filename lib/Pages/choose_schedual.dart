@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_me/Pages/lazyLoader.dart';
 import 'package:schedule_me/Widgets/ColorSceamContainer.dart';
-import 'package:schedule_me/Widgets/ContainerBox.dart';
-import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
+
 
 // to make a dynamic show , we need to make it to calculate the scheduals as needed by calculating four scheduals at a time
 class ChooseSchedual extends StatefulWidget {

@@ -1,17 +1,17 @@
 import 'package:schedule_me/data%20parsing/Course.dart';
 import 'package:schedule_me/data%20parsing/Group.dart';
 
-class TimetableDataParser {
+class LectureTableDataParser {
   final List<Course> courses;
 
-  TimetableDataParser({required this.courses});
+  LectureTableDataParser({required this.courses});
 
-  factory TimetableDataParser.fromJson(Map<String, dynamic> json) {
+  factory LectureTableDataParser.fromJson(Map<String, dynamic> json) {
     final coursesJson = json['data']?['COURSES'] as List<dynamic>? ?? [];
     final courses = coursesJson
         .map((e) => Course.fromJson(e as Map<String, dynamic>))
         .toList();
-    return TimetableDataParser(courses: courses);
+    return LectureTableDataParser(courses: courses);
   }
 
   List<Course> getAllCourses() => courses;

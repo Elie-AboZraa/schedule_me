@@ -1,8 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:schedule_me/Helpers/NetworkConnections/_GetLectureRequest.dart';
-import 'package:schedule_me/Helpers/NetworkConnections/_processRequestedData.dart';
+import 'package:schedule_me/Class/CacheDir.dart';
 import 'package:schedule_me/Helpers/_ListViewFromFiles.dart';
 import 'package:schedule_me/Helpers/_FilePicker.dart';
 import 'package:schedule_me/Helpers/getCacheFiles.dart';
@@ -13,18 +12,19 @@ import 'package:schedule_me/Widgets/ContainerBox.dart';
 class ParsingSchedualFromFile extends StatefulWidget {
   final dynamic PassedData;
 
-  const ParsingSchedualFromFile({super.key,this.PassedData});
+  const ParsingSchedualFromFile({super.key, this.PassedData});
 
   @override
-  State<ParsingSchedualFromFile> createState() => _ParsingSchedualFromFileState();
+  State<ParsingSchedualFromFile> createState() =>
+      _ParsingSchedualFromFileState();
 }
 
 class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
-  dynamic _result; 
- // To store the result from the Future
-  bool _isLoading = false; 
- // Optional: Show loading indicator
-
+  dynamic _result;
+  // To store the result from the Future
+  bool _isLoading = false;
+  // Optional: Show loading indicator
+  /*
   void _runFuture() async {
         setState(() {
       _isLoading = true;
@@ -40,7 +40,7 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
      Navigator.of(context).push(createRoute(selection: "CreateSchedules",data: tmp));
     }
 
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
               titletextstyle: Theme.of(
                 context,
               ).textTheme.titleLarge?.apply(color: Colors.black),
-              
+
               child: Padding(
                 padding: const EdgeInsets.only(top: 15.0),
                 child: Row(
@@ -72,7 +72,10 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
                       //To-Do change the Text here
                       text: " من ملف موفر ",
                       icon: Icons.add,
-                      function: FilePicker,
+                      function: () async => Navigator.of(context).push(
+                        createRoute(selection: "CreateSchedules", data: await pickafile()),
+                      ),
+                      //route: "creating_schedual",
                       buttonStyle: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 0, 94, 66),
                       ),
@@ -81,7 +84,7 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
                       //To-Do change the Text here
                       text: " من موقع الجامعة ",
                       icon: Icons.add,
-                      function: _isLoading ? null : _runFuture,
+                      function: _isLoading ? null : null,
                       buttonStyle: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 0, 94, 66),
                       ),
@@ -92,7 +95,7 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
             ),
             FutureBuilder(
               future: getCacheFiles(
-                subDirectory: "/Downloaded-Schedules",
+                subDirectory: CacheDir().directory,
                 fileExtention: ".xlsx",
               ),
               //To-Do convet this builder to a widget

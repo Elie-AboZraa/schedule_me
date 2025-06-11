@@ -3,24 +3,20 @@
 // for example : there is two lecture with the same name but are difrent in time and teacher 
 // the LectureTable will allow that 
 // the Subject will Not , it will count it as one subject , with two difrent lectures
-import 'package:schedule_me/Class/Lecture.dart';
+import 'package:schedule_me/Class/Subject.dart';
 
-class Subject {
+class SubjectTable {
+  SubjectTable._privateConstructor();
 
-  final String? name;
-  final String?  hours;
-  final String? type;
-  final List<Lecture> Th_lectures;
-  final List<Lecture> Lp_lectures;
+  static final SubjectTable _instance = SubjectTable._privateConstructor();
+
+  factory SubjectTable() {
+    return _instance;
+  }
+  void clear(){
+    Subject_list.clear();
+  }
+  final List<Subject> Subject_list = [];
   
-
-  Subject({
-    required this.name,
-    required this.hours,
-    required this.type,
-    required this.Th_lectures,
-    required this.Lp_lectures,
-  });
-
 
 }

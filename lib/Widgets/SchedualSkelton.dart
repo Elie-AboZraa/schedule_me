@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_me/Widgets/ContainerBox.dart';
-import 'package:schedule_me/Widgets/ScedualCalendar.dart';
+
 
 class SchedualSkelton extends StatelessWidget {
   final int index;
@@ -18,7 +18,8 @@ class SchedualSkelton extends StatelessWidget {
       titletextstyle: Theme.of(
         context,
       ).textTheme.headlineSmall?.apply(color: Colors.black),
-      child: ScedualCalendar(),
+      //child: ScedualCalendar(),
+      child: Text("hallo"),
     );
   }
 }

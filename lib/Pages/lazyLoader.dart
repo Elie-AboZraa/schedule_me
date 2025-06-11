@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
-import 'package:schedule_me/Widgets/ContainerBox.dart';
-import 'package:schedule_me/Widgets/ScedualCalendar.dart';
 import 'package:schedule_me/Widgets/SchedualSkelton.dart';
 
 class LazyLoaderListView extends StatefulWidget {
