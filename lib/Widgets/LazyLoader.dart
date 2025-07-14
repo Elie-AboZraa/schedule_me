@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:schedule_me/Class/Subject.dart';
-import 'package:schedule_me/Helpers/_CreateTreeFromSubjects.dart';
+import 'package:schedule_me/Class/ScheduleGenerator.dart';
 import 'package:schedule_me/Widgets/SchedualSkelton.dart';
 
 class LazyLoaderListView extends StatefulWidget {

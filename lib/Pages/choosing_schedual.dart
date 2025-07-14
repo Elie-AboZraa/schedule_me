@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:schedule_me/Class/Subject.dart';
 import 'package:schedule_me/Class/SubjectTable.dart';
 import 'package:schedule_me/Helpers/_GenerateColorCoatForSubjects.dart';
-import 'package:schedule_me/Pages/lazyLoader.dart';
+import 'package:schedule_me/Widgets/LazyLoader.dart';
 import 'package:schedule_me/Widgets/ColorSceamContainer.dart';
 
 // to make a dynamic show , we need to make it to calculate the scheduals as needed by calculating four scheduals at a time
