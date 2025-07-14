@@ -4,11 +4,13 @@ import 'package:schedule_me/Widgets/DropDownButtonWithTitle.dart';
 import 'package:schedule_me/Widgets/SearchBox.dart';
 
 class FilterContainer extends StatefulWidget {
-  final Function onDropdownMenuStateChange;
-  TextEditingController searchFiealdControllar;
+  final VoidCallback onStateChanged;
+  final VoidCallback onSearchChanged;
+  var textFieldControllar;
   FilterContainer({
-    required this.onDropdownMenuStateChange,
-    required this.searchFiealdControllar,
+    required this.onStateChanged,
+    required this.onSearchChanged,
+    this.textFieldControllar,
     super.key,
   });
 
@@ -17,7 +19,12 @@ class FilterContainer extends StatefulWidget {
 }
 
 class _FilterContainerState extends State<FilterContainer> {
-  Widget ListTileWithSelection({Title = "", ID}) {
+  void _updateState() {
+    //logic shit
+    widget.onStateChanged();
+  }
+
+  Widget ListTileWithSelection({Title = ""}) {
     var options = [];
     switch (Title) {
       case "نوع المقرر":
@@ -38,9 +45,15 @@ class _FilterContainerState extends State<FilterContainer> {
     return DropDownButtonWithTitle(
       enteries: makeEnteries(options),
       title: Title,
-      ID: ID,
-      sharedDataFunction: widget.onDropdownMenuStateChange,
+      ID: "s",
+      sharedDataFunction: widget.onStateChanged,
     );
+  }
+
+  void _onStateChanged() {
+    setState(() {
+      _updateState();
+    });
   }
 
   @override
@@ -51,16 +64,16 @@ class _FilterContainerState extends State<FilterContainer> {
       children: [
         Row(
           children: [
-            ListTileWithSelection(Title: "نوع المقرر", ID: "subjectType"),
-            ListTileWithSelection(Title: "الترتيب حسب", ID: "sortBy"),
+            ListTileWithSelection(Title: "نوع المقرر"),
+            ListTileWithSelection(Title: "الترتيب حسب"),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //CheckBoxGroup(onDropdownMenuStateChange: _onDropdownMenuStateChange),
+            //CheckBoxGroup(onStateChanged: _onStateChanged),
             // ListTileWithSelection(Title: ""),
-            SearchBox(controller: widget.searchFiealdControllar),
+            SearchBox(),
           ],
         ),
       ],

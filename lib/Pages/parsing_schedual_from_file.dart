@@ -72,9 +72,18 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
                       //To-Do change the Text here
                       text: " من ملف موفر ",
                       icon: Icons.add,
-                      function: () async => Navigator.of(context).push(
-                        createRoute(selection: "CreateSchedules", data: await pickafile()),
-                      ),
+                      function: () async {
+                        var tmp = await pickafile();
+                        if (tmp != null) {
+                          CacheDir().saveCSVFile(tmp);
+                          Navigator.of(context).push(
+                            createRoute(
+                              selection: "CreateSchedules",
+                              data: tmp,
+                            ),
+                          );
+                        }
+                      },
                       //route: "creating_schedual",
                       buttonStyle: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 0, 94, 66),
@@ -95,8 +104,10 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
             ),
             FutureBuilder(
               future: getCacheFiles(
-                subDirectory: CacheDir().directory,
-                fileExtention: ".xlsx",
+                subDirectory: Directory(
+                  CacheDir().directory.path + "/UserScheduals",
+                ),
+                fileExtention: ".csv",
               ),
               //To-Do convet this builder to a widget
               builder: (context, snapshot) {

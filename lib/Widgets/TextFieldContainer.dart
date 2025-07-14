@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
 
 class TextFieldContainer extends StatefulWidget {
-  const TextFieldContainer({super.key, this.type,this.controller});
-  final type;
+  const TextFieldContainer({
+    this.type,
+    this.lable,
+    this.leadingIcon,
+    this.trallingIcon,
+    this.controller,
+    this.heightfactore,
+    super.key,
+  });
+  final String? type;
   final dynamic controller;
-  
+
+  final String? lable;
+  final int? heightfactore;
+
+  final IconData? leadingIcon;
+  final IconData? trallingIcon;
+
   @override
   State<TextFieldContainer> createState() => _TextFieldContainerState();
 }
@@ -13,7 +27,10 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
   var HidePassword = false;
   var TrailingIcon = Icons.person_outline;
   var LeadingIcon;
-  String _checkType(type) {
+  String? _checkType(type) {
+    if (type == null) {
+      return null;
+    }
     if (type == "password") {
       HidePassword = true;
       TrailingIcon = Icons.lock_outline;
@@ -30,22 +47,25 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
     var mediamSize = MediaQuery.sizeOf(context).width > (600);
 
     return Container(
-      constraints: BoxConstraints(maxWidth: mediamSize ? size.width * 0.4 : size.width),
+      constraints: BoxConstraints(
+        maxWidth: mediamSize ? size.width * 0.4 : size.width,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         spacing: 3,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 9),
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.labelMedium?.apply(
-                fontWeightDelta: 2,
-                color: Colors.black,
+          if (title != null)
+            Padding(
+              padding: const EdgeInsets.only(right: 9),
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.labelMedium?.apply(
+                  fontWeightDelta: 2,
+                  color: Colors.black,
+                ),
               ),
             ),
-          ),
           Container(
             decoration: BoxDecoration(
               color: Color.fromARGB(255, 242, 242, 242),
@@ -67,11 +87,16 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
                 cursorHeight: 20,
                 decoration: InputDecoration(border: InputBorder.none),
               ),
-              trailing: Icon(
-                TrailingIcon,
-                color: Color.fromARGB(255, 144, 144, 144),
-              ),
-              leading: LeadingIcon,
+              trailing: widget.trallingIcon == null
+                  ? null
+                  : Icon(
+                      widget.trallingIcon,
+                      color: Color.fromARGB(255, 144, 144, 144),
+                    ),
+
+              leading: (widget.leadingIcon) == null
+                  ? null
+                  : Icon(widget.leadingIcon),
             ),
           ),
         ],

@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 class DropDownButtonWithTitle extends StatefulWidget {
   final List<DropdownMenuItem> enteries;
   final String title;
-  bool? shrinkWrap;
+   bool? shrinkWrap;
 
   TextStyle? textstyle;
 
-  double? widthfactor;
+  var widthfactor;
 
-  double? heightfactor;
+  var heightfactor;
   var ID;
   // a function to send the data for the parent widget ON CHANGE IN VALUES
   Function? sharedDataFunction;
+
 
   DropDownButtonWithTitle({
     super.key,
@@ -47,7 +48,7 @@ class _DropDownButtonWithTitleState extends State<DropDownButtonWithTitle> {
   void initState() {
     super.initState();
     selcted_value = widget.enteries[0].value;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+     WidgetsBinding.instance.addPostFrameCallback((_) {
       // This runs once after the first frame is rendered
       SendDataToParent();
     });

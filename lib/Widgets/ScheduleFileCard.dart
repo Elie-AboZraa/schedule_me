@@ -20,14 +20,17 @@ class ScheduleFileCard extends StatelessWidget {
         child: Row(
           children: [
             // Icon for file type
-            Icon(
-              Icons.insert_drive_file,
-              color: Theme.of(context).primaryColor,
-              size: 32,
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Icon(
+                Icons.insert_drive_file,
+                color: const Color.fromARGB(255, 0, 124, 87),
+                size: 32,
+              ),
             ),
-        
+
             const SizedBox(width: 16),
-        
+
             // File name text
             Expanded(
               child: Text(
@@ -40,13 +43,9 @@ class ScheduleFileCard extends StatelessWidget {
                 ),
               ),
             ),
-        
+
             // Chevron icon for navigation
-            Icon(
-              Icons.chevron_right,
-              color: Colors.grey[600],
-              size: 28,
-            ),
+            Icon(Icons.chevron_right, color: Colors.grey[600], size: 28),
           ],
         ),
       ),

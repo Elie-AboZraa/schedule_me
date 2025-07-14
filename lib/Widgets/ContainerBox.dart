@@ -49,29 +49,29 @@ class _ContainerBoxState extends State<ContainerBox> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(),
-              //dealing with the conflict that if the title and the more option exsist thene they should be in a row  and have aligned space betwean 
-              //else if only the title exsist then the text should be in the center 
-              if (widget.title!=null&&widget.more_option_button!=null)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(),
-                        Text(
-                            widget.title!,
-                            textAlign: TextAlign.center,
-                            style: titletextstyle,
-                          ),
-                          ?widget.more_option_button
-                      ],
-                    )
-                    else if(widget.title!=null)
+              //dealing with the conflict that if the title and the more option exsist thene they should be in a row  and have aligned space betwean
+              //else if only the title exsist then the text should be in the center
+              if (widget.title != null && widget.more_option_button != null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(),
                     Text(
-                            widget.title!,
-                            textAlign: TextAlign.center,
-                            style: titletextstyle,
-                          ),
+                      widget.title!,
+                      textAlign: TextAlign.center,
+                      style: titletextstyle,
+                    ),
+                    ?widget.more_option_button,
+                  ],
+                )
+              else if (widget.title != null)
+                Text(
+                  widget.title!,
+                  textAlign: TextAlign.center,
+                  style: titletextstyle,
+                ),
               widget.child,
-              Row()
+              Row(),
             ],
           ),
         ),

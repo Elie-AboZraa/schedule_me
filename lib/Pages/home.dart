@@ -43,7 +43,6 @@ class _HomePageState extends State<HomePage> {
           ),
           FutureBuilder(
             future: CacheDir().init(
-              "UserSchedules/"+
               widget.PassedData[0]["University"] +
                   "/" +
                   widget.PassedData[0]["facility"],

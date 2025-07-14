@@ -1,0 +1,43 @@
+
+void check_conflect_pairs(List<Pair> pairs) {
+  for (var i = 0; i < pairs.length; i++) {
+    for (var j = i + 1; j < pairs.length; j++) {
+      does_conflect(pairs[i], pairs[j]);
+    }
+  }
+}
+
+void does_conflect(pair1, pair2) {}
+
+
+
+// Conflict Graph: Map<lectureId, List<conflicting lectureIds>>
+Map<String, List<String>> buildConflictGraph(List<Lecture> lectures) {
+  Map<String, List<String>> graph = {};
+
+  // Initialize graph with empty adjacency lists
+  for (var lecture in lectures) {
+    graph[lecture.id!] = [];
+  }
+
+  // Add edges for conflicting lectures
+  for (int i = 0; i < lectures.length; i++) {
+    for (int j = i + 1; j < lectures.length; j++) {
+      var a = lectures[i];
+      var b = lectures[j];
+      if (isConflicting(a, b)) {
+        graph[a.id]!.add(b.id!);
+        graph[b.id]!.add(a.id!);
+      }
+    }
+  }
+
+  return graph;
+}
+
+// Check if two lectures overlap
+bool isConflicting(Lecture a, Lecture b) {
+  if (a.day != b.day) return false;
+  return (int.parse(a.academicTimeEnd!) > int.parse(b.academicTimeStart!)) &&
+      (int.parse(b.academicTimeEnd!) > int.parse(a.academicTimeStart!));
+}

@@ -1,45 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:schedule_me/Class/Subject.dart';
 import 'package:schedule_me/Widgets/ContainerBox.dart';
 
 class ColorSceamContainer extends StatelessWidget {
-  final List? subjects_list;
+  final List<Subject> subjects_list;
 
-  const ColorSceamContainer({List? this.subjects_list, super.key});
+  const ColorSceamContainer({required this.subjects_list, super.key});
 
   @override
   Widget build(BuildContext context) {
-    if (this.subjects_list == null || this.subjects_list!.isEmpty) {
-      //return Container(child: Text("you Dident choose any subject or Somthing Wrong Happened"),);
-    }
-    var Subjects = [
-      "soso al rakasa",
-      "software2",
-      "itw",
-      "soso al rakasa",
-      "software2",
-      "itw",
-      "itw",
-      "soso al rakasa",
-      "software2",
-      "itw"," bvg",
-    ];
+    // if (this.subjects_list == null || this.subjects_list!.isEmpty) {
+    //   //return Container(child: Text("you Dident choose any subject or Somthing Wrong Happened"),);
+    // }
     return ContainerBox(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.only(left: 10,right: 20),
-        reverse: true,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 10,
-          //mainAxisAlignment: MainAxisAlignment.center,
-          //textDirection: TextDirection.rtl,
-          children: createColorSceam(context, Subjects),
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        spacing: 10,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        //mainAxisAlignment: MainAxisAlignment.center,
+        //textDirection: TextDirection.rtl,
+        children: createColorSceam(context, subjects_list),
       ),
     );
   }
 
-  createColorSceam(context, Subjects) {
+  createColorSceam(context, List<Subject> Subjects) {
     var width = MediaQuery.sizeOf(context).width;
     var height = MediaQuery.sizeOf(context).height;
     List<Widget> ColorSceam = [];
@@ -49,7 +34,7 @@ class ColorSceamContainer extends StatelessWidget {
         ColorSceam.add(
           Column(
             spacing: 5,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: tmp.toList(),
           ),
         );
@@ -57,15 +42,16 @@ class ColorSceamContainer extends StatelessWidget {
       }
       tmp.add(
         Row(
-          
           spacing: 10,
           children: [
-            Text(Subjects[i]),
+            //value1
+            Text(Subjects[i].name!),
             Container(
               height: height * 0.07,
               child: SizedBox(width: width * 0.08, height: height * 0.08),
               decoration: BoxDecoration(
-                color: Colors.red,
+                //value1.color
+                color: Subjects[i].color,
                 shape: BoxShape.circle,
               ),
             ),

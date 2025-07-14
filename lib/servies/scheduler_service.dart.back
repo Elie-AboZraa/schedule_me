@@ -1,15 +1,15 @@
 import 'package:schedule_me/Class/Lecture.dart';
 import 'package:schedule_me/Class/StudentPref.dart';
-import 'package:schedule_me/Class/LectureTable.dart';
+import 'package:schedule_me/Class/Subject.dart';
 
 class SchedulerService {
-  final List<Lecture> allLectures;
+  final List<Subject> chosenSubject;
   final StudentPref prefs;
 
-  SchedulerService({required this.allLectures, required this.prefs});
+  SchedulerService({required this.chosenSubject, required this.prefs});
 
   // Generate all valid schedules
-  List<LectureTable> generateAllPossible() {
+  List<> generateAllPossible() {
     List<LectureTable> LectureTables = [];
     _backtrack(LectureTable(), 0, LectureTables);
     return LectureTables;

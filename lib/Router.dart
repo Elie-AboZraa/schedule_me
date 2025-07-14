@@ -1,9 +1,8 @@
-import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
-import 'package:schedule_me/Pages/choose_schedual.dart';
+import 'package:schedule_me/Pages/choosing_schedual.dart';
 import 'package:schedule_me/Pages/home.dart';
 import 'package:schedule_me/Pages/login.dart';
-import 'package:schedule_me/Pages/creating_schedules.dart';
+import 'package:schedule_me/Pages/choosing_subject.dart';
 import 'package:schedule_me/Pages/parsing_schedual_from_file.dart';
 
 dynamic createRoute({required String selection,dynamic data}) {
@@ -17,9 +16,9 @@ dynamic createRoute({required String selection,dynamic data}) {
         case "ParsingSchedualFromFile":
           return ParsingSchedualFromFile(PassedData: data,);
         case "CreateSchedules":
-          return CreatingSchedulesPage(fetchedSchedules: data,);
+          return ChoosingSubject(fetchedSchedules: data,);
         case "ChooseSchedule":
-          return ChooseSchedual();
+          return ChooseSchedual(ChoosedSubjects: data,);
         default:
           return LoginPage();
       }

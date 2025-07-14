@@ -1,5 +1,6 @@
 import re
 import sys
+import csv
 from openpyxl import load_workbook,Workbook
 
 # Helper functions to identify patterns
@@ -45,7 +46,9 @@ def find_time(ws, col_index, row_index):
     for i in reversed(range(row_index + 1)):
         cell = ws.cell(row=row_index - i + 1, column=col_index + 1).value
         if is_time_range(cell):
-            return cell
+            #08:00-12:00
+            cell=cell.split("-")
+            return [cell[0],cell[1]]
 
 def find_day(ws, col_index, row_index):
     day_count = 0
@@ -149,6 +152,7 @@ def main():
     Lecture={}
 
     # Loop through each column
+    lectureid=0
     for col_index in range(ws.max_column):
         for row_index in range(ws.max_row):
             cell = ws.cell(row=row_index + 1, column=col_index + 1).value
@@ -171,43 +175,58 @@ def main():
                         Subjects[subject_key] = []
 
                     Lecture["Teacher"] = find_teacher(ws, col_index, row_index)
-                    Lecture["Timerange"] = find_time(ws, col_index, row_index)
-                    Lecture["Location"] = find_location(ws, col_index, row_index)
+                    time_tmp=None
+                    time_tmp=find_time(ws, col_index, row_index)
+                    Lecture["Timerange-start"] =time_tmp[0]
+                    Lecture["Timerange-end"] = time_tmp[1]
+                    tsad=find_location(ws, col_index, row_index).__str__()
+                    Lecture["Location"] = tsad.__str__()
                     Lecture["RepitionTime"] = rep_time
                     Lecture["Day"] = find_day(ws, col_index, row_index)
                     # the LectureType reffure to if the lecture is therotical or in labs 
                     Lecture["LectureType"] = find_lecturetype(ws, col_index, row_index)
-                    
+                    Lecture["LectureId"] = lectureid.__str__()
+                    lectureid+=1
                     Subjects[subject_key].append(Lecture.copy())
 
 
 
 
     # Create a new workbook and select the active worksheet
-    wb_out = Workbook()
-    ws_out = wb_out.active
+    #wb_out = Workbook()
+    #ws_out = wb_out.active
     #print(Subjects)
     #{sub_name:[{Lectures},{Lectures},{Lectures}]}
     # Write data rows
-    for subject_name, Lectures in Subjects.items():
-        for dicks in Lectures:
-            row = [
-                subject_name,
-                dicks.get("RepitionTime", ""),
-                dicks.get("Day", ""),
-                dicks.get("Timerange", ""),  # Fix typo if renamed earlier
-                dicks.get("Location", ""),
-                dicks.get("Teacher", ""),
-                dicks.get("LectureType", "")
-
-            ]
-            ws_out.append(row)
+    open(sys.path[0] + "/extracted_schedule_openpyxl.csv", 'w', newline='').close()
+    with open(sys.path[0] + "/extracted_schedule_openpyxl.csv", 'a', newline='') as csvfile:
         
-        ws_out.append(["Sub",subject_name,calculate_Subject_Hours(Lectures)])
+        csv_writer = csv.writer(csvfile)
+        for subject_name, Lectures in Subjects.items():
+            for dicks in Lectures:
+                csv_writer.writerow(
+                [
+                    dicks.get("LectureId", ""),
+                    subject_name,
+                    dicks.get("RepitionTime", ""),
+                    dicks.get("Day", ""),
+                    dicks.get("Timerange-start", ""),  # Fix typo if renamed earlier
+                    dicks.get("Timerange-end", ""),  # Fix typo if renamed earlier
+                    dicks.get("Location", ""),
+                    dicks.get("Teacher", ""),
+                    dicks.get("LectureType", ""),
+
+                ]
+
+                )
+                #ws_out.append(row)
+            csv_writer.writerow(
+            ["Sub",subject_name,calculate_Subject_Hours(Lectures)]
+            )
 
     # Save the workbook
-    output_path = sys.path[0] + "/extracted_schedule_openpyxl.xlsx"
-    wb_out.save(output_path)
+    #output_path = sys.path[0] + "/extracted_schedule_openpyxl.xlsx"
+    #wb_out.save(output_path)
 
 if __name__ == "__main__":
     main()

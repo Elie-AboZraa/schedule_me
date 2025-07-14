@@ -53,12 +53,43 @@ class CacheDir {
     return dir;
   }
 
-  Directory get directory {
+  void saveCSVFile(File f) {
+    var d = Directory(directory.path + '/UserScheduals/');
+    d.createSync(recursive: true);
+    print(d.path);
+    f.copySync(d.path + p.basename(f.path));
+  }
 
+  Future<List<File>?> getCacheFiles({
+    Directory? subDirectory,
+    String? fileExtention,
+  }) async {
+    //search some path and get files
+    //if no files exist return null
+    //getApplicationDocumentsDirectory
+
+    List<File> list_Serulized_Schedules = [];
+    if (subDirectory != null) {
+      if (fileExtention == null) {
+        await subDirectory.list().forEach((file) {
+          if (file is File) (list_Serulized_Schedules.add(file));
+        });
+      } else {
+        await subDirectory.list().forEach((file) {
+          if (file is File && file.path.endsWith(fileExtention))
+            (list_Serulized_Schedules.add(file));
+        });
+      }
+    }
+    return list_Serulized_Schedules;
+  }
+
+  Directory get directory {
     if (_directory == null) {
-      throw StateError("CacheDir not initialized. Call CacheDir().init() first.");
+      throw StateError(
+        "CacheDir not initialized. Call CacheDir().init() first.",
+      );
     }
     return _directory!;
   }
-
 }

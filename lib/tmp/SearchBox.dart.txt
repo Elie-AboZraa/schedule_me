@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+
+class SearchBox extends StatelessWidget {
+  final textFieldControllar;
+  final ValueChanged<String>? onChanged;
+  const SearchBox({this.textFieldControllar, this.onChanged, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.fromLTRB(5, 0, 15, 0),
+      decoration: BoxDecoration(
+        //color: const Color.fromARGB(255, 235, 235, 235),
+        gradient: LinearGradient(
+          colors: [
+            const Color.fromARGB(255, 235, 235, 235),
+            const Color.fromARGB(255, 226, 226, 226),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(100),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        spacing: 10,
+        children: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.search, color: Colors.black),
+            style: IconButton.styleFrom(backgroundColor: Colors.grey),
+          ),
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width * 0.3,
+            child: TextField(
+              maxLines: 1,
+              textDirection: TextDirection.rtl,
+              decoration: InputDecoration(border: InputBorder.none),
+              onChanged: (text) {
+                if (onChanged != null) {
+                  onChanged!(text);
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

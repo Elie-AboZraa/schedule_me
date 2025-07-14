@@ -4,7 +4,7 @@ import 'package:schedule_me/Widgets/ContainerBox.dart';
 
 class ContainerTitleSubtitleButton extends StatefulWidget {
   final Subject SubjectObject;
-  final List passedList;
+  final Map<int, bool> passedList;
   const ContainerTitleSubtitleButton({
     required this.SubjectObject,
     required this.passedList,
@@ -16,14 +16,17 @@ class ContainerTitleSubtitleButton extends StatefulWidget {
       _ContainerTitleSubtitleButtonState();
 }
 
-var icon = Icons.heart_broken;
-bool status = false;
-
 class _ContainerTitleSubtitleButtonState
     extends State<ContainerTitleSubtitleButton> {
   @override
   Widget build(BuildContext context) {
+    bool status = false;
     var subject = widget.SubjectObject;
+    if (widget.passedList.containsKey(widget.SubjectObject.index)) {
+      status = true;
+    } else {
+      status = false;
+    }
     return ContainerBox(
       //value 1
       title: subject.name,
@@ -50,32 +53,53 @@ class _ContainerTitleSubtitleButtonState
                 context,
               ).textTheme.labelSmall?.apply(color: Colors.grey),
             ),
-            ElevatedButton(
-              //value 4
-              onPressed: () {
-                setState(() {
-                  if (status == false) {
-                    status = true;
-                    icon = Icons.abc;
-                    widget.passedList.add(subject.name);
-                  } else {
-                    status = false;
-                    icon = Icons.heart_broken;
-                  }
-                });
-              },
+            TextButton.icon(
+              label: Text("دراسة", style: TextStyle(color: Colors.white)),
+              icon: status
+                  ? Icon(Icons.favorite, color: Colors.white)
+                  : Icon(Icons.favorite_border, color: Colors.white),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.deepPurple,
               ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                spacing: 6,
-                children: [
-                  Icon(icon, color: Colors.white),
-                  Text("دراسة", style: TextStyle(color: Colors.white)),
-                ],
-              ),
+              onPressed: () {
+                setState(() {
+                  status = !status;
+                  if (status) {
+                    widget.passedList[widget.SubjectObject.index!] = true;
+                  } else {
+                    widget.passedList.remove(widget.SubjectObject.index);
+                  }
+                });
+              },
             ),
+            // ElevatedButton(
+            //   //value 4
+            //   onPressed: () {
+            //     icon = Icons.abc;
+            //     widget.passedList[widget.subjectIndex] = true;
+            //     icon = Icons.heart_broken;
+            //     if (status == false) {
+            //       status = true;
+            //     } else {
+            //       status = false;
+            //       widget.passedList.remove([widget.subjectIndex]);
+            //     }
+            //     setState(() {
+            //       status = !status;
+            //     });
+            //   },
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: Colors.deepPurple,
+            //   ),
+            //   child: Row(
+            //     mainAxisSize: MainAxisSize.min,
+            //     spacing: 6,
+            //     children: [
+            //       Icon(icon, color: Colors.white),
+            //       Text("دراسة", style: TextStyle(color: Colors.white)),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

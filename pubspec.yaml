@@ -40,6 +40,7 @@ dependencies:
   path: ^1.9.0
   fluttertoast: ^8.2.12 # For error messages
   file_picker: ^10.1.9
+  csv: ^6.0.0
 
 dev_dependencies:
   flutter_test:
