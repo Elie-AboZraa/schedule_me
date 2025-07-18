@@ -5,14 +5,18 @@ class ContainerBox extends StatefulWidget {
 
   final Widget child;
   final TextStyle? titletextstyle;
-
+  final Color? boxColor;
   final Widget? more_option_button;
-
+  final Function(bool)? saveFunction;
+  final bool? savestate;
   const ContainerBox({
     this.title = null,
     required this.child,
+    this.boxColor,
     this.titletextstyle,
     this.more_option_button,
+    this.saveFunction,
+    this.savestate,
     super.key,
   });
 
@@ -21,6 +25,13 @@ class ContainerBox extends StatefulWidget {
 }
 
 class _ContainerBoxState extends State<ContainerBox> {
+  bool state = false;
+  @override
+  void initState() {
+    super.initState();
+    state = widget.savestate != null ? widget.savestate! : false;
+  }
+
   @override
   Widget build(BuildContext context) {
     var windosize = MediaQuery.of(context).size;
@@ -38,9 +49,16 @@ class _ContainerBoxState extends State<ContainerBox> {
           padding: EdgeInsets.only(bottom: 10, top: 6),
           width: windosize_mediam ? windosize.width * 0.8 : double.infinity,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: widget.boxColor ?? Colors.white,
             borderRadius: BorderRadius.circular(12),
-            boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10)],
+            boxShadow: [
+              BoxShadow(
+                color: widget.boxColor == null
+                    ? Colors.grey
+                    : Colors.green.shade800,
+                blurRadius: 12,
+              ),
+            ],
           ),
 
           //here is the main logic
@@ -51,11 +69,20 @@ class _ContainerBoxState extends State<ContainerBox> {
               Row(),
               //dealing with the conflict that if the title and the more option exsist thene they should be in a row  and have aligned space betwean
               //else if only the title exsist then the text should be in the center
-              if (widget.title != null && widget.more_option_button != null)
+              if (widget.title != null &&
+                  (widget.more_option_button != null ||
+                      widget.saveFunction != null))
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(),
+                    widget.saveFunction == null
+                        ? SizedBox()
+                        : IconButton.filled(
+                            onPressed: saveLogic,
+                            icon: state
+                                ? Icon(Icons.bookmark_add_rounded)
+                                : Icon(Icons.bookmark_add_outlined),
+                          ),
                     Text(
                       widget.title!,
                       textAlign: TextAlign.center,
@@ -77,5 +104,16 @@ class _ContainerBoxState extends State<ContainerBox> {
         ),
       ),
     );
+  }
+
+  void saveLogic() {
+    setState(() {
+      state = !state;
+      if (state) {
+        widget.saveFunction!(true);
+      } else {
+        widget.saveFunction!(false);
+      }
+    });
   }
 }

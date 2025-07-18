@@ -1,14 +1,28 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:schedule_me/Class/CacheDir.dart';
 import 'package:schedule_me/Class/Lecture.dart';
+import 'package:schedule_me/Helpers/_ToJsonFromScheduleMap.dart';
 import 'package:schedule_me/Widgets/ContainerBox.dart';
 
 class SchedualSkelton extends StatelessWidget {
-  final int index;
+  final String title;
   final Map<String, Map<String, Lecture>>? schedual;
+  final bool? state;
+  String? filename;
+  Function? updateUi;
+
   /*{Saterday:{timerange:lectureID,timerange:lectureID,timerange:lectureID},} */
-  const SchedualSkelton(this.schedual, this.index, {super.key});
+  SchedualSkelton(
+    this.schedual,
+    this.title, {
+    this.state,
+    this.filename,
+    this.updateUi,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,17 +30,33 @@ class SchedualSkelton extends StatelessWidget {
       return ContainerBox(child: Text("لا يوجد جداول ممكنة اخرى"));
     }
     return ContainerBox(
-      title: " $index الجدول",
+      title: title,
       more_option_button: IconButton(
         onPressed: () {},
         icon: Icon(Icons.more_vert_outlined),
       ),
+      saveFunction: _saveSchedual,
+      savestate: state,
       titletextstyle: Theme.of(
         context,
       ).textTheme.headlineSmall?.apply(color: Colors.black),
-      //child: ScedualCalendar(),
       child: ContainerBox(child: createSchedualWidget(schedual!)),
     );
+  }
+
+  _saveSchedual(bool state) {
+    filename ??= "${DateTime.now()}.json";
+    if (state) {
+      CacheDir().saveScheduleAsJson(
+        jsonEncode(toJsonMap(schedual!)),
+        filename!,
+      );
+    } else {
+      CacheDir().DeleteJsonSchedule(filename!);
+    }
+    if (updateUi != null) {
+      updateUi!();
+    }
   }
 }
 

@@ -23,4 +23,10 @@ class Subject {
     required this.Th_lectures,
     required this.Lp_lectures,
   });
+
+  @override
+  String toString() {
+    //to make debugging easier
+    return '$name';
+  }
 }

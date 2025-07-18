@@ -54,10 +54,22 @@ class CacheDir {
   }
 
   void saveCSVFile(File f) {
+    var d = Directory(directory.path + '/UserDatabase/');
+    d.createSync(recursive: true);
+
+    f.copySync(d.path + p.basename(f.path));
+  }
+
+  saveScheduleAsJson(String jsonString, String filename) {
     var d = Directory(directory.path + '/UserScheduals/');
     d.createSync(recursive: true);
-    print(d.path);
-    f.copySync(d.path + p.basename(f.path));
+    File(d.path + filename).writeAsString(jsonString);
+  }
+
+  DeleteJsonSchedule(String filename) {
+    var d = Directory(directory.path + '/UserScheduals/');
+    d.createSync(recursive: true);
+    File(d.path + filename).delete();
   }
 
   Future<List<File>?> getCacheFiles({

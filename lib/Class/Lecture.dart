@@ -48,13 +48,31 @@ class Lecture {
 
   Map<String, dynamic> toJson() {
     return {
-      'subject': subject,
-      'academicTimeStart': academicTimeStart.toString(),
-      'academicTimeEnd': academicTimeEnd.toString(),
-      'teacher': teacher.toString(),
-      'classroom': classroom.toString(),
-      'day': day.toString(),
-      'type': type,
+      "subjectId": subjectId,
+      "subject": subject,
+      "repetition": repetition,
+      "day": day,
+      "academicTimeStart": academicTimeStart,
+      "academicTimeEnd": academicTimeEnd,
+      "classroom": classroom,
+      "teacher": teacher,
+      "type": type,
+      "color": this.color!.toARGB32(),
     };
+  }
+
+  factory Lecture.fromJson(Map<String, dynamic> json) {
+    return Lecture(
+      subjectId: json["subjectId"],
+      subject: json["subject"],
+      repetition: json["repetition"],
+      day: json["day"],
+      academicTimeStart: json["academicTimeStart"],
+      academicTimeEnd: json["academicTimeEnd"],
+      classroom: json["classroom"],
+      teacher: json["teacher"],
+      type: json["type"],
+      color: Color(json["color"]),
+    );
   }
 }

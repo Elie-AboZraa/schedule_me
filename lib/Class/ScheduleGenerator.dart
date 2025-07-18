@@ -14,8 +14,7 @@ const List<String> validDays = [
 
 class ScheduleGenerator {
   List<Subject> selectedSubjects;
-  Map<int, List<Pair>> pairs = {};
-  /*sub1:[Pair(),Pair()],sub2:[Pair(),Pair()]*/
+  Map<int, List<Pair>> pairs = {}; /*sub1:[Pair(),Pair()],sub2:[Pair(),Pair()]*/
   bool done = false;
   //TO-DO Optimzation: enum the days to int so the map look like  Map<int, Map<String, String>>
   Map<String, Map<String, Lecture>> select = {};
@@ -25,7 +24,6 @@ class ScheduleGenerator {
   List<int> counter = [];
   List<int> ranges = [];
 
-  //this variable exsist to include the schedual of counter [0,0,0.....0,0,0]
   ScheduleGenerator({required this.selectedSubjects}) {
     _initPairs();
     _initSelectedMap();
@@ -76,7 +74,6 @@ class ScheduleGenerator {
       select[key]!.clear();
     }
     for (var i = 0; i < pickedPairs.length; i++) {
-      //print(counter);
       var pair = pickedPairs[i];
 
       if (pair.full == false) {
@@ -85,7 +82,6 @@ class ScheduleGenerator {
         var timerange = '${l.academicTimeStart!}-${l.academicTimeEnd!}';
         if (select[l.day!]![timerange] != null) {
           if (!_incrementCounter()) {
-            print("no good soulotion were found");
             done = true;
             return null;
           }
@@ -93,8 +89,6 @@ class ScheduleGenerator {
           i--;
           continue;
         }
-        //        select[l.day!]![timerange] = '$timerange\n${l.repetition!}${l.type!}';
-
         select[l.day!]![timerange] = l;
         continue;
       }
@@ -108,7 +102,6 @@ class ScheduleGenerator {
           select[pair.l1!.day!]![timeRangeTh] != null ||
           (timeRangeTh == timeRangeLp && pair.l1!.day == pair.l2!.day)) {
         if (!_incrementCounter()) {
-          print("no good soulotion were found");
           done = true;
           return null;
         }

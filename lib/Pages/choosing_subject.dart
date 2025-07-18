@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:schedule_me/Class/Subject.dart';
 import 'package:schedule_me/Class/SubjectTable.dart';
 import 'package:schedule_me/Helpers/_CreateSchedualsFromCSV.dart';
+import 'package:schedule_me/Helpers/_SearchSubjectByName.dart';
+import 'package:schedule_me/Helpers/_SortSubjectBy.dart';
 import 'package:schedule_me/Router.dart';
 import 'package:schedule_me/Widgets/ButtonWithTextandIcon.dart';
 import 'package:schedule_me/Widgets/ContainerBox.dart';
@@ -20,17 +22,13 @@ class ChoosingSubject extends StatefulWidget {
   State<ChoosingSubject> createState() => _ChoosingSubjectState();
 }
 
-var x = 0;
+Map<String, String> sortCache = {};
 
 class _ChoosingSubjectState extends State<ChoosingSubject> {
-  var icon = Icons.heart_broken;
   List<Subject> subjectlist = [];
-  void sosoalraksa(Map map) {
-    print(map.keys.toString() + "soso");
-  }
+  List<Subject> searchedList = [];
 
   Timer? _debounceTimer;
-  String searchQuery = "";
   Map<int, bool> chosenScheduals = {};
   final TextEditingController _searchController = TextEditingController();
 
@@ -41,23 +39,20 @@ class _ChoosingSubjectState extends State<ChoosingSubject> {
       }
 
       _debounceTimer = Timer(Duration(milliseconds: 500), () {
-        searchQuery = _searchController.text;
-        print("searching");
-        searchTheSubjectTable(_searchController.text);
+        _searchTheSubjectTable(_searchController.text);
       });
     });
   }
 
-  List<Subject> searchedList = [];
-  void searchTheSubjectTable(String text) {
-    searchedList.clear();
-    for (var i = 0; i < subjectlist.length; i++) {
-      if (subjectlist[i].name!.toLowerCase().contains(text.toLowerCase())) {
-        searchedList.add(subjectlist[i]);
-      }
-    }
+  _sortBy(Map<String, String> map) {
+    sortCache = map;
+    sortBy(map, searchedList);
     setState(() {});
-    print(searchedList);
+  }
+
+  _searchTheSubjectTable(String query) {
+    searchTheSubjectTable(query, searchedList, sortCache);
+    setState(() {});
   }
 
   @override
@@ -70,7 +65,7 @@ class _ChoosingSubjectState extends State<ChoosingSubject> {
       subjectlist = [];
     }
     setupSearchListener();
-    searchTheSubjectTable("");
+    _searchTheSubjectTable("");
   }
 
   @override
@@ -97,8 +92,7 @@ class _ChoosingSubjectState extends State<ChoosingSubject> {
                       title: "فلاتر",
                       // child: Container(),
                       child: FilterContainer(
-                        onDropdownMenuStateChange: sosoalraksa,
-
+                        onDropdownMenuStateChange: _sortBy,
                         searchFiealdControllar: _searchController,
                       ),
                     ),
@@ -114,14 +108,14 @@ class _ChoosingSubjectState extends State<ChoosingSubject> {
               ),
             ),
           ),
-          StickyBottomContainer(context, chosenScheduals),
+          stickyBottomContainer(context, chosenScheduals),
         ],
       ),
     );
   }
 }
 
-Container StickyBottomContainer(
+Container stickyBottomContainer(
   BuildContext context,
   Map<int, bool> chosenScheduals,
 ) {

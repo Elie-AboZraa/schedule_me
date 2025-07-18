@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:schedule_me/Class/CacheDir.dart';
 import 'package:schedule_me/Widgets/ButtonWithTextandIcon.dart';
+import 'package:schedule_me/Widgets/ContainerBox.dart';
 import 'package:schedule_me/Widgets/SchedualsHistory.dart';
 import 'package:schedule_me/Widgets/StikyTopConatiner.dart';
 
@@ -41,6 +41,23 @@ class _HomePageState extends State<HomePage> {
             route: "ParsingSchedualFromFile",
             PassedData: widget.PassedData,
           ),
+          ContainerBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 20,
+              children: [
+                ButtonWithTextandIcon(
+                  text: "تحديث",
+                  icon: Icons.refresh,
+                  function: updateUi,
+                ),
+                Text(
+                  "الجداول المحفوظة",
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+              ],
+            ),
+          ),
           FutureBuilder(
             future: CacheDir().init(
               widget.PassedData[0]["University"] +
@@ -51,11 +68,15 @@ class _HomePageState extends State<HomePage> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               }
-              return SchedualsHistory();
+              return SchedualsHistory(updateUi: updateUi);
             },
           ),
         ],
       ),
     );
+  }
+
+  updateUi() {
+    setState(() {});
   }
 }

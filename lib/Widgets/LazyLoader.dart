@@ -35,8 +35,6 @@ class _LazyLoaderListViewState extends State<LazyLoaderListView> {
       isLoading = true;
     });
     for (var i = 0; i < increment; i++) {
-      //Map<String, Map<String, Lecture>>
-      //var tmp = generator!.generateNextSchedual();
       if (generator!.generateNextSchedual() != null) {
         data.add(generator!.deepCloneWithLectureCopy());
       } else {
@@ -65,9 +63,9 @@ class _LazyLoaderListViewState extends State<LazyLoaderListView> {
         itemCount: data.length,
         itemBuilder: (context, index) {
           if (data[index] == null) {
-            return SchedualSkelton(null, index);
+            return SchedualSkelton(null, index.toString() + "الجدول");
           }
-          return SchedualSkelton(data[index], index + 1);
+          return SchedualSkelton(data[index], "${index + 1}الجدول");
         },
       ),
     );

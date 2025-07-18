@@ -105,7 +105,7 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
             FutureBuilder(
               future: getCacheFiles(
                 subDirectory: Directory(
-                  CacheDir().directory.path + "/UserScheduals",
+                  CacheDir().directory.path + "/UserDatabase",
                 ),
                 fileExtention: ".csv",
               ),
