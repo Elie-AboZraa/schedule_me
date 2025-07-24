@@ -83,10 +83,12 @@ class _ContainerBoxState extends State<ContainerBox> {
                                 ? Icon(Icons.bookmark_add_rounded)
                                 : Icon(Icons.bookmark_add_outlined),
                           ),
-                    Text(
-                      widget.title!,
-                      textAlign: TextAlign.center,
-                      style: titletextstyle,
+                    Expanded(
+                      child: Text(
+                        widget.title!,
+                        textAlign: TextAlign.center,
+                        style: titletextstyle,
+                      ),
                     ),
                     ?widget.more_option_button,
                   ],

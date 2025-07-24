@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_me/Pages/login.dart';
-//import 'package:google_fonts/google_fonts.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +14,11 @@ class ScheduleMe extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      //theme: ThemeData(textTheme: GoogleFonts.notoKufiArabicTextTheme(),colorSchemeSeed: Colors.white),
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        textTheme: GoogleFonts.notoKufiArabicTextTheme(),
+        colorSchemeSeed: Colors.white,
+      ),
       home: LoginPage(),
     );
   }

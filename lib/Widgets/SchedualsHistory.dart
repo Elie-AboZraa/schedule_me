@@ -4,24 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:schedule_me/Class/CacheDir.dart';
 import 'package:schedule_me/Helpers/_ToJsonFromScheduleMap.dart';
-import 'package:schedule_me/Helpers/getCacheFiles.dart';
 import 'package:schedule_me/Widgets/SchedualSkelton.dart';
 
 class SchedualsHistory extends StatelessWidget {
   Function updateUi;
-  SchedualsHistory({required this.updateUi, super.key});
+  String passedSubDirectory;
+  SchedualsHistory({
+    required this.updateUi,
+    required this.passedSubDirectory,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getCacheFiles(
-        subDirectory: Directory(CacheDir().directory.path + "/UserScheduals/"),
+      future: CacheDir().getCacheFiles(
+        baseDirectory: this.passedSubDirectory,
+        subDirectory: "/UserScheduals/",
         fileExtention: ".json",
       ),
 
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting ||
-            snapshot.data == null) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Text("Error");
@@ -29,10 +33,10 @@ class SchedualsHistory extends StatelessWidget {
           List<Widget> widgetList = [];
 
           for (var file in snapshot.data!) {
-            var x = fromJsonMap(file.readAsStringSync());
+            var savedSchedual = fromJsonMap(file.readAsStringSync());
             widgetList.add(
               SchedualSkelton(
-                x,
+                savedSchedual,
                 p.basename(file.path.split(".json")[0]),
                 state: true,
                 filename: p.basename(file.path),
@@ -40,7 +44,11 @@ class SchedualsHistory extends StatelessWidget {
               ),
             );
           }
-          return Expanded(child: ListView(children: widgetList));
+          return ListView(
+            children: widgetList,
+            shrinkWrap: true,
+            physics: ClampingScrollPhysics(),
+          );
         }
         return Text("Big Error");
       },

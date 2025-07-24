@@ -11,9 +11,9 @@ class ButtonWithTextandIcon extends StatelessWidget {
   final VoidCallback? function;
 
   final TextStyle? textstyle;
-  
+
   final ButtonStyle? buttonStyle;
-  
+
   final dynamic PassedData;
 
   const ButtonWithTextandIcon({
@@ -30,19 +30,18 @@ class ButtonWithTextandIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: 
-      buttonStyle==(null)?
-      ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple)
-      :buttonStyle,
+      style: buttonStyle == (null)
+          ? ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple)
+          : buttonStyle,
 
-      onPressed:
-          function == (null)
-              ? () => Navigator.of(context).push(createRoute(selection: route,data: PassedData))
-              : function,
+      onPressed: function == (null)
+          ? () => Navigator.of(
+              context,
+            ).push(createRoute(selection: route, data: PassedData))
+          : function,
       child: Padding(
-        padding: const EdgeInsets.only(top: 3.0,bottom: 3.0),
+        padding: const EdgeInsets.only(top: 3.0, bottom: 3.0),
         child: Row(
-          
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -51,17 +50,19 @@ class ButtonWithTextandIcon extends StatelessWidget {
             icon == (null)
                 ? SizedBox()
                 : Icon(
-                  icon!,
-                  color: Colors.white,
-                  size: Theme.of(context).textTheme.titleLarge?.fontSize,
-                ),
+                    icon!,
+                    color: Colors.white,
+                    size: Theme.of(context).textTheme.titleLarge?.fontSize,
+                  ),
             Text(
               text,
-        
-              style:textstyle==(null)? Theme.of(context).textTheme.titleMedium?.apply(
-                color: Colors.white,
-                //fontWeightDelta: 1,
-              ):textstyle!,
+
+              style: textstyle == (null)
+                  ? Theme.of(context).textTheme.titleSmall?.apply(
+                      color: Colors.white,
+                      //fontWeightDelta: 1,
+                    )
+                  : textstyle!,
             ),
           ],
         ),

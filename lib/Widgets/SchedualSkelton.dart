@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:schedule_me/Class/CacheDir.dart';
 import 'package:schedule_me/Class/Lecture.dart';
 import 'package:schedule_me/Helpers/_ToJsonFromScheduleMap.dart';
@@ -40,7 +41,7 @@ class SchedualSkelton extends StatelessWidget {
       titletextstyle: Theme.of(
         context,
       ).textTheme.headlineSmall?.apply(color: Colors.black),
-      child: ContainerBox(child: createSchedualWidget(schedual!)),
+      child: ContainerBox(child: createSchedualWidget(schedual!, context)),
     );
   }
 
@@ -60,7 +61,10 @@ class SchedualSkelton extends StatelessWidget {
   }
 }
 
-Widget createSchedualWidget(Map<String, Map<String, Lecture>> schedual) {
+Widget createSchedualWidget(
+  Map<String, Map<String, Lecture>> schedual,
+  context,
+) {
   /*{Saterday:{timerange:lectureID,timerange:lectureID,timerange:lectureID},} */
   List<Widget> rowChildren = [];
   Row column = Row(
@@ -70,7 +74,16 @@ Widget createSchedualWidget(Map<String, Map<String, Lecture>> schedual) {
   );
   for (String day in schedual.keys) {
     var timerangesMap = schedual[day]!;
-    rowChildren.add(Text(day + '\n', textAlign: TextAlign.center));
+    rowChildren.add(
+      Card(
+        shadowColor: Colors.transparent,
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Text(day, textAlign: TextAlign.center),
+        ),
+      ),
+    );
     for (String timerange in timerangesMap.keys) {
       Lecture lecture = timerangesMap[timerange]!;
       rowChildren.add(
@@ -93,5 +106,12 @@ Widget createSchedualWidget(Map<String, Map<String, Lecture>> schedual) {
       rowChildren.clear();
     }
   }
-  return column;
+  return SizedBox(
+    width: MediaQuery.sizeOf(context).width * 1.5,
+    child: SingleChildScrollView(
+      reverse: true,
+      scrollDirection: Axis.horizontal,
+      child: column,
+    ),
+  );
 }

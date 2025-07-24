@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_me/Class/CacheDir.dart';
 import 'package:schedule_me/Widgets/ButtonWithTextandIcon.dart';
 import 'package:schedule_me/Widgets/ContainerBox.dart';
 import 'package:schedule_me/Widgets/SchedualsHistory.dart';
@@ -15,63 +14,48 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    CacheDir().init(
-      widget.PassedData[0]["University"] +
-          "/" +
-          widget.PassedData[0]["facility"],
-    );
     return Scaffold(
-      body: Column(
-        spacing: 25,
-        children: [
-          Center(
-            child: Container(
-              alignment: Alignment.topCenter,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            spacing: 10,
+            children: [
+              Stikytopconatiner(),
 
-              padding: EdgeInsets.only(top: 16),
-              width: MediaQuery.of(context).size.width * 0.90,
-
-              child: Stikytopconatiner(),
-            ),
-          ),
-
-          ButtonWithTextandIcon(
-            text: "جدول جديد",
-            icon: Icons.add,
-            route: "ParsingSchedualFromFile",
-            PassedData: widget.PassedData,
-          ),
-          ContainerBox(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 20,
-              children: [
-                ButtonWithTextandIcon(
-                  text: "تحديث",
-                  icon: Icons.refresh,
-                  function: updateUi,
+              ButtonWithTextandIcon(
+                text: "جدول جديد",
+                icon: Icons.add,
+                route: "ParsingSchedualFromFile",
+                PassedData: widget.PassedData,
+              ),
+              ContainerBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 20,
+                  children: [
+                    ButtonWithTextandIcon(
+                      text: "تحديث",
+                      icon: Icons.refresh,
+                      function: updateUi,
+                    ),
+                    Text(
+                      "الجداول المحفوظة",
+                      style: Theme.of(context).textTheme.labelLarge,
+                    ),
+                  ],
                 ),
-                Text(
-                  "الجداول المحفوظة",
-                  style: Theme.of(context).textTheme.labelLarge,
-                ),
-              ],
-            ),
+              ),
+              SchedualsHistory(
+                updateUi: updateUi,
+                passedSubDirectory:
+                    widget.PassedData[0]["University"] +
+                    "/" +
+                    widget.PassedData[0]["facility"],
+              ),
+            ],
           ),
-          FutureBuilder(
-            future: CacheDir().init(
-              widget.PassedData[0]["University"] +
-                  "/" +
-                  widget.PassedData[0]["facility"],
-            ),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              }
-              return SchedualsHistory(updateUi: updateUi);
-            },
-          ),
-        ],
+        ),
       ),
     );
   }

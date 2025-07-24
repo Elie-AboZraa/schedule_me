@@ -64,9 +64,9 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
 
               child: Padding(
                 padding: const EdgeInsets.only(top: 15.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                child: Wrap(
                   spacing: 10,
+
                   children: [
                     ButtonWithTextandIcon(
                       //To-Do change the Text here
@@ -84,6 +84,7 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
                           );
                         }
                       },
+
                       //route: "creating_schedual",
                       buttonStyle: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 0, 94, 66),
@@ -91,7 +92,7 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
                     ),
                     ButtonWithTextandIcon(
                       //To-Do change the Text here
-                      text: " من موقع الجامعة ",
+                      text: " تنزيل تلقائي ",
                       icon: Icons.add,
                       function: _isLoading ? null : null,
                       buttonStyle: ElevatedButton.styleFrom(
@@ -103,10 +104,8 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
               ),
             ),
             FutureBuilder(
-              future: getCacheFiles(
-                subDirectory: Directory(
-                  CacheDir().directory.path + "/UserDatabase",
-                ),
+              future: CacheDir().getCacheFiles(
+                subDirectory: "/UserDatabase",
                 fileExtention: ".csv",
               ),
               //To-Do convet this builder to a widget
