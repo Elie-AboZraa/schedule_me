@@ -73,56 +73,67 @@ class ScheduleGenerator {
     for (var key in select.keys) {
       select[key]!.clear();
     }
+    baseloop:
     for (var i = 0; i < pickedPairs.length; i++) {
       var pair = pickedPairs[i];
 
       if (pair.full == false) {
         Lecture l;
         (pair.l2 == null) ? l = pair.l1! : l = pair.l2!;
-        var timerange = '${l.academicTimeStart!}-${l.academicTimeEnd!}';
-        if (select[l.day!]![timerange] != null) {
-          if (!_incrementCounter()) {
-            done = true;
-            return null;
+        //        var timerange = '${l.academicTimeStart!}-${l.academicTimeEnd!}';
+        for (var timerange in l.timeRange!) {
+          //for some resone there is a bug that dont allow to call the trim and the substring at the same time , it will yyell with a ' at the end of the string IDKN
+          timerange = timerange.trim();
+
+          timerange = timerange.substring(1, timerange.length - 1);
+          if (select[l.day!]![timerange] != null) {
+            if (!_incrementCounter()) {
+              done = true;
+              return null;
+            }
+            pickedPairs = _pickPairs();
+            i--;
+            continue baseloop;
           }
-          pickedPairs = _pickPairs();
-          i--;
-          continue;
+          select[l.day!]![timerange] = l;
         }
-        select[l.day!]![timerange] = l;
-        continue;
+        continue baseloop;
       }
 
-      var timeRangeTh =
-          '${pair.l1!.academicTimeStart!}-${pair.l1!.academicTimeEnd!}';
-      var timeRangeLp =
-          '${pair.l2!.academicTimeStart!}-${pair.l2!.academicTimeEnd!}';
+      var timeRangeTh = "";
+      var timeRangeLp = "";
+      for (timeRangeTh in pair.l1!.timeRange!) {
+        timeRangeTh = timeRangeTh.trim();
+        timeRangeTh = timeRangeTh.substring(1, timeRangeTh.length - 1);
 
-      if (select[pair.l2!.day!]![timeRangeLp] != null ||
-          select[pair.l1!.day!]![timeRangeTh] != null ||
-          (timeRangeTh == timeRangeLp && pair.l1!.day == pair.l2!.day)) {
-        if (!_incrementCounter()) {
-          done = true;
-          return null;
+        for (timeRangeLp in pair.l2!.timeRange!) {
+          timeRangeLp = timeRangeLp.trim();
+          timeRangeLp = timeRangeLp.substring(1, timeRangeLp.length - 1);
+
+          if (select[pair.l2!.day!]![timeRangeLp] != null ||
+              select[pair.l1!.day!]![timeRangeTh] != null ||
+              (timeRangeTh == timeRangeLp && pair.l1!.day == pair.l2!.day)) {
+            if (!_incrementCounter()) {
+              done = true;
+              return null;
+            }
+            pickedPairs = _pickPairs();
+            i--;
+            continue baseloop;
+          }
         }
-        pickedPairs = _pickPairs();
-        i--;
-        continue;
       }
-      /*
-        old implemintaion if we needed to make schedual with missing subject 
-      //Checking conflect , if there is a conflect with other lectures ignore the pair(subject)
-      if (select[pair.l2!.day!]![timeRangeLp] != null ||
-          select[pair.l1!.day!]![timeRangeTh] != null) {
-        continue;
-      }*/ /*
-      select[pair.l2!.day!]![timeRangeLp] =
-          '$timeRangeLp\n${pair.l2!.repetition!}${pair.l2!.type!}';
-      select[pair.l1!.day!]![timeRangeTh] =
-          '$timeRangeTh\n${pair.l1!.repetition!}${pair.l1!.type!}';*/
-
-      select[pair.l2!.day!]![timeRangeLp] = pair.l2!;
-      select[pair.l1!.day!]![timeRangeTh] = pair.l1!;
+      //add all the timeranges to the schedual
+      for (var timerange in pair.l2!.timeRange!) {
+        timerange = timerange.trim();
+        timerange = timerange.substring(1, timerange.length - 1);
+        select[pair.l2!.day!]![timerange] = pair.l2!;
+      }
+      for (var timerange in pair.l1!.timeRange!) {
+        timerange = timerange.trim();
+        timerange = timerange.substring(1, timerange.length - 1);
+        select[pair.l1!.day!]![timerange] = pair.l1!;
+      }
     }
     _incrementCounter();
     return select;

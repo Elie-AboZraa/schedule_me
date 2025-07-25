@@ -45,36 +45,40 @@ void Set_SubjectTable_LectureTable_From_CSV(File csvfile) {
       Lp_lectures.clear();
       counter++;
     } else {
-      if (row[8] == 'T') {
+      if (row[7] == 'T') {
         Th_lectures.add(
           Lecture(
             subjectId: counter,
             subject: row[1],
             repetition: row[2],
             day: row[3],
-            academicTimeStart: row[4],
-            academicTimeEnd: row[5],
-            classroom: row[6],
-            teacher: row[7],
+            timeRange: row[4]
+                .toString()
+                .substring(1, row[4].toString().length - 1)
+                .split(','),
+            classroom: row[5],
+            teacher: row[6],
             type: 'T',
           ),
         );
-      } else if (row[8] == 'P') {
+      } else if (row[7] == 'P') {
         Lp_lectures.add(
           Lecture(
             subjectId: counter,
             subject: row[1],
             repetition: row[2],
             day: row[3],
-            academicTimeStart: row[4],
-            academicTimeEnd: row[5],
-            classroom: row[6],
-            teacher: row[7],
+            timeRange: row[4]
+                .toString()
+                .substring(1, row[4].toString().length - 1)
+                .split(','),
+            classroom: row[5],
+            teacher: row[6],
             type: 'P',
           ),
         );
       } else {
-        FlutterError("Somthing Worng with Excel Data Order");
+        FlutterError("Somthing Worng with Csv Data Order");
       }
     }
   }

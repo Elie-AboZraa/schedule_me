@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:schedule_me/Class/CacheDir.dart';
 import 'package:schedule_me/Class/Lecture.dart';
 import 'package:schedule_me/Helpers/_ToJsonFromScheduleMap.dart';

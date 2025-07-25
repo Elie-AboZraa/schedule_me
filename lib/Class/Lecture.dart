@@ -5,8 +5,7 @@ class Lecture {
   final int subjectId;
   final String? subject;
   final String? teacher;
-  final String? academicTimeStart;
-  final String? academicTimeEnd;
+  final List<String>? timeRange;
   //lecture_repetition= الشعبة
   final String? repetition;
   final String? classroom;
@@ -18,8 +17,7 @@ class Lecture {
     required this.subject,
     required this.repetition,
     required this.day,
-    required this.academicTimeStart,
-    required this.academicTimeEnd,
+    required this.timeRange,
     required this.classroom,
     required this.teacher,
     required this.type,
@@ -28,7 +26,7 @@ class Lecture {
 
   @override
   String toString() {
-    return 'Lecture: $subject,$classroom,$day,$academicTimeStart,$academicTimeEnd,$teacher';
+    return 'Lecture: $subject,$classroom,$day,$timeRange,$teacher';
   }
 
   Lecture copy() {
@@ -37,8 +35,7 @@ class Lecture {
       subject: subject,
       repetition: repetition,
       day: day,
-      academicTimeStart: academicTimeStart,
-      academicTimeEnd: academicTimeEnd,
+      timeRange: timeRange,
       classroom: classroom,
       teacher: teacher,
       type: type,
@@ -52,8 +49,7 @@ class Lecture {
       "subject": subject,
       "repetition": repetition,
       "day": day,
-      "academicTimeStart": academicTimeStart,
-      "academicTimeEnd": academicTimeEnd,
+      "timeRange": timeRange,
       "classroom": classroom,
       "teacher": teacher,
       "type": type,
@@ -67,8 +63,7 @@ class Lecture {
       subject: json["subject"],
       repetition: json["repetition"],
       day: json["day"],
-      academicTimeStart: json["academicTimeStart"],
-      academicTimeEnd: json["academicTimeEnd"],
+      timeRange: json["timeRange"],
       classroom: json["classroom"],
       teacher: json["teacher"],
       type: json["type"],

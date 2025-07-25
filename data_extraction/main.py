@@ -47,8 +47,7 @@ def find_time(ws, col_index, row_index):
         cell = ws.cell(row=row_index - i + 1, column=col_index + 1).value
         if is_time_range(cell):
             #08:00-12:00
-            cell=cell.split("-")
-            return [cell[0],cell[1]]
+            return cell
 
 def find_day(ws, col_index, row_index):
     day_count = 0
@@ -169,16 +168,17 @@ def main():
             elif is_subject(ws, col_index, row_index):
                 tmp=None
                 for tmp in _clean_subject_name(cell_value):
+                    add=True
                     subject_key = tmp[0]
                     rep_time = tmp[1]
                     if subject_key not in Subjects:
                         Subjects[subject_key] = []
-
                     Lecture["Teacher"] = find_teacher(ws, col_index, row_index)
-                    time_tmp=None
+                    '''time_tmp=None
                     time_tmp=find_time(ws, col_index, row_index)
                     Lecture["Timerange-start"] =time_tmp[0]
-                    Lecture["Timerange-end"] = time_tmp[1]
+                    Lecture["Timerange-end"] = time_tmp[1]'''
+                    Lecture["Timerange"]=[find_time(ws, col_index, row_index)]
                     tsad=find_location(ws, col_index, row_index).__str__()
                     Lecture["Location"] = tsad.__str__()
                     Lecture["RepitionTime"] = rep_time
@@ -186,9 +186,14 @@ def main():
                     # the LectureType reffure to if the lecture is therotical or in labs 
                     Lecture["LectureType"] = find_lecturetype(ws, col_index, row_index)
                     Lecture["LectureId"] = lectureid.__str__()
-                    lectureid+=1
-                    Subjects[subject_key].append(Lecture.copy())
-
+                    
+                    for lecture in Subjects[subject_key]:
+                        if lecture["LectureType"]==Lecture["LectureType"] and lecture["RepitionTime"]== rep_time:
+                            lecture["Timerange"].append(Lecture["Timerange"][0])
+                            add=False
+                    if add:
+                        lectureid+=1
+                        Subjects[subject_key].append(Lecture.copy())
 
 
 
@@ -198,8 +203,8 @@ def main():
     #print(Subjects)
     #{sub_name:[{Lectures},{Lectures},{Lectures}]}
     # Write data rows
-    open(sys.path[0] + "/extracted_schedule_openpyxl.csv", 'w', newline='').close()
-    with open(sys.path[0] + "/extracted_schedule_openpyxl.csv", 'a', newline='') as csvfile:
+    open(sys.path[0] + "/new-extracted_schedule_openpyxl.csv", 'w', newline='').close()
+    with open(sys.path[0] + "/new-extracted_schedule_openpyxl.csv", 'a', newline='') as csvfile:
         
         csv_writer = csv.writer(csvfile)
         for subject_name, Lectures in Subjects.items():
@@ -210,13 +215,13 @@ def main():
                     subject_name,
                     dicks.get("RepitionTime", ""),
                     dicks.get("Day", ""),
-                    dicks.get("Timerange-start", ""),  # Fix typo if renamed earlier
-                    dicks.get("Timerange-end", ""),  # Fix typo if renamed earlier
+                    dicks.get("Timerange", ""),
                     dicks.get("Location", ""),
                     dicks.get("Teacher", ""),
                     dicks.get("LectureType", ""),
 
                 ]
+
 
                 )
                 #ws_out.append(row)
