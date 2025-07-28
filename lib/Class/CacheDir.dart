@@ -4,6 +4,8 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 class CacheDir {
+  String? university;
+  String? facility;
   // Singleton instance
   static final CacheDir _instance = CacheDir._internal();
   bool is_initilized = false;
@@ -85,6 +87,9 @@ class CacheDir {
 
     if (baseDirectory != null) {
       //then its not initilized
+      var _tmp = baseDirectory.toLowerCase().split("/");
+      university = _tmp[0];
+      facility = _tmp[1];
       await init(baseDirectory);
     }
 

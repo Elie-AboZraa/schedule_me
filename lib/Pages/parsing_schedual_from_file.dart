@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:schedule_me/Class/CacheDir.dart';
+import 'package:schedule_me/Helpers/_AutoFetchFile.dart';
 import 'package:schedule_me/Helpers/_ListViewFromFiles.dart';
 import 'package:schedule_me/Helpers/_FilePicker.dart';
 import 'package:schedule_me/Router.dart';
@@ -19,7 +21,6 @@ class ParsingSchedualFromFile extends StatefulWidget {
 }
 
 class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
-  dynamic _result;
   // To store the result from the Future
   bool _isLoading = false;
   // Optional: Show loading indicator
@@ -40,6 +41,13 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
     }
 
   }*/
+  updateUI() async {
+    setState(() {});
+    await Fluttertoast.showToast(
+      msg: 'GeeksforGeeks', // Message to display in the toast
+      backgroundColor: Colors.grey, // Background color of the toast
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,16 +92,19 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
                         }
                       },
 
-                      //route: "creating_schedual",
                       buttonStyle: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 0, 94, 66),
                       ),
                     ),
                     ButtonWithTextandIcon(
-                      //To-Do change the Text here
                       text: " تنزيل تلقائي ",
                       icon: Icons.add,
-                      function: _isLoading ? null : null,
+                      // function: _isLoading ? autoFetchFile : autoFetchFile,
+                      function: () {
+                        if (!_isLoading) {
+                          autoFetchFile(this.updateUI);
+                        }
+                      },
                       buttonStyle: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 0, 94, 66),
                       ),

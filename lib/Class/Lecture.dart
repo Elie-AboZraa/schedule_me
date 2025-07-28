@@ -63,7 +63,7 @@ class Lecture {
       subject: json["subject"],
       repetition: json["repetition"],
       day: json["day"],
-      timeRange: json["timeRange"],
+      timeRange: json["timeRange"].cast<String>(),
       classroom: json["classroom"],
       teacher: json["teacher"],
       type: json["type"],
