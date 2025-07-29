@@ -23,10 +23,10 @@ class _ChooseSchedualState extends State<ChooseSchedual> {
       generateColorCoat(tmp[index]);
       subjects.add(tmp[index]);
     }
-    print(widget.ChoosedSubjects);
+    //print(widget.ChoosedSubjects);
     return Scaffold(
       appBar: AppBar(
-        title: Text("اختر جدول"),
+        title: Text(" احفظ جدول المراد"),
         elevation: 2,
         surfaceTintColor: Colors.grey,
         backgroundColor: Colors.white,
@@ -34,7 +34,7 @@ class _ChooseSchedualState extends State<ChooseSchedual> {
       ),
       body: Column(
         children: [
-          Expanded(child: LazyLoaderListView(children: subjects)),
+          Expanded(child: LazyLoaderListView(selectedSubjects: subjects)),
           ColorSceamContainer(subjects_list: subjects),
         ],
       ),

@@ -12,7 +12,7 @@ class SchedualSkelton extends StatelessWidget {
   final bool? state;
   String? filename;
   Function? updateUi;
-
+  int? totalhours;
   /*{Saterday:{timerange:lectureID,timerange:lectureID,timerange:lectureID},} */
   SchedualSkelton(
     this.schedual,
@@ -20,6 +20,7 @@ class SchedualSkelton extends StatelessWidget {
     this.state,
     this.filename,
     this.updateUi,
+    this.totalhours,
     super.key,
   });
 
@@ -39,7 +40,9 @@ class SchedualSkelton extends StatelessWidget {
       titletextstyle: Theme.of(
         context,
       ).textTheme.headlineSmall?.apply(color: Colors.black),
-      child: ContainerBox(child: createSchedualWidget(schedual!, context)),
+      child: ContainerBox(
+        child: createSchedualWidget(schedual!, this.totalhours, context),
+      ),
     );
   }
 
@@ -61,6 +64,7 @@ class SchedualSkelton extends StatelessWidget {
 
 Widget createSchedualWidget(
   Map<String, Map<String, Lecture>> schedual,
+  int? totalhours,
   context,
 ) {
   /*{Saterday:{timerange:lectureID,timerange:lectureID,timerange:lectureID},} */
@@ -84,6 +88,7 @@ Widget createSchedualWidget(
     );
     for (String timerange in timerangesMap.keys) {
       Lecture lecture = timerangesMap[timerange]!;
+
       rowChildren.add(
         Card(
           color: lecture.color,
@@ -99,17 +104,36 @@ Widget createSchedualWidget(
         ),
       );
     }
+
     if (rowChildren.isNotEmpty) {
       column.children.add(Column(children: rowChildren.toList()));
       rowChildren.clear();
     }
   }
+
   return SizedBox(
     width: MediaQuery.sizeOf(context).width * 1.5,
     child: SingleChildScrollView(
       reverse: true,
       scrollDirection: Axis.horizontal,
-      child: column,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          spacing: 30,
+          children: [
+            column,
+            (totalhours != null)
+                ? Text(
+                    "عدد الساعات المسجلة : $totalhours",
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge!.apply(color: Colors.grey),
+                  )
+                : SizedBox(),
+          ],
+        ),
+      ),
     ),
   );
 }

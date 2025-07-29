@@ -14,6 +14,6 @@ void searchTheSubjectTable(
       searchedList.add(subjectlist[i]);
     }
   }
-  print(sortCache);
+  //print(sortCache);
   reapplySort(sortCache, searchedList);
 }

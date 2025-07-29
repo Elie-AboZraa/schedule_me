@@ -5,8 +5,8 @@ import 'package:schedule_me/Class/ScheduleGenerator.dart';
 import 'package:schedule_me/Widgets/SchedualSkelton.dart';
 
 class LazyLoaderListView extends StatefulWidget {
-  final List<Subject> children;
-  LazyLoaderListView({required this.children, super.key});
+  final List<Subject> selectedSubjects;
+  LazyLoaderListView({required this.selectedSubjects, super.key});
 
   @override
   _LazyLoaderListViewState createState() => _LazyLoaderListViewState();
@@ -20,9 +20,15 @@ class _LazyLoaderListViewState extends State<LazyLoaderListView> {
   bool isLoading = false;
   ScheduleGenerator? generator;
   bool done = false;
+  int total_hours = 0;
   @override
   void initState() {
-    generator = ScheduleGenerator(selectedSubjects: widget.children);
+    generator = ScheduleGenerator(selectedSubjects: widget.selectedSubjects);
+    for (var subject in widget.selectedSubjects) {
+      if (subject.hours != null) {
+        total_hours += int.parse(subject.hours.toString());
+      }
+    }
     _loadMore();
     super.initState();
   }
@@ -65,7 +71,11 @@ class _LazyLoaderListViewState extends State<LazyLoaderListView> {
           if (data[index] == null) {
             return SchedualSkelton(null, index.toString() + "الجدول");
           }
-          return SchedualSkelton(data[index], "${index + 1}الجدول");
+          return SchedualSkelton(
+            data[index],
+            "${index + 1}الجدول",
+            totalhours: this.total_hours,
+          );
         },
       ),
     );
