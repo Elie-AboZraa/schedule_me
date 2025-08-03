@@ -78,44 +78,47 @@ class _ChoosingSubjectState extends State<ChoosingSubject> {
         backgroundColor: Colors.white,
         shadowColor: Colors.black,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Column(
-                  children: [
-                    ContainerBox(
-                      title: "فلاتر",
-                      // child: Container(),
-                      child: FilterContainer(
-                        onDropdownMenuStateChange: _sortBy,
-                        searchFiealdControllar: _searchController,
+      body: SafeArea(
+        bottom: true,
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Column(
+                    children: [
+                      ContainerBox(
+                        title: "فلاتر",
+                        // child: Container(),
+                        child: FilterContainer(
+                          onDropdownMenuStateChange: _sortBy,
+                          searchFiealdControllar: _searchController,
+                        ),
                       ),
-                    ),
-                    ContainerBox(
-                      title: "اختر المواد التي تريد دراستها",
-                      child: SubjectTableGridView(
-                        fetchedSubjects: searchedList,
-                        chosenScheduals: chosenScheduals,
+                      ContainerBox(
+                        title: "اختر المواد التي تريد دراستها",
+                        child: SubjectTableGridView(
+                          fetchedSubjects: searchedList,
+                          chosenScheduals: chosenScheduals,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          stickyBottomContainer(context, chosenScheduals),
-        ],
+            stickyBottomContainer(context, chosenScheduals),
+          ],
+        ),
       ),
     );
   }
 }
 
-Container stickyBottomContainer(
+Widget stickyBottomContainer(
   BuildContext context,
   Map<int, bool> chosenScheduals,
 ) {

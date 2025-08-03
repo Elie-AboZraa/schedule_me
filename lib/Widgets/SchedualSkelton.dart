@@ -47,7 +47,7 @@ class SchedualSkelton extends StatelessWidget {
   }
 
   _saveSchedual(bool state) {
-    filename ??= "${DateTime.now()}.json";
+    filename ??= "${DateTime.now().toString().split('.')[0]}.json";
     if (state) {
       CacheDir().saveScheduleAsJson(
         jsonEncode(toJsonMap(schedual!)),

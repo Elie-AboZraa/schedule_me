@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:schedule_me/Class/CacheDir.dart';
 import 'package:schedule_me/Helpers/_AutoFetchFile.dart';
 import 'package:schedule_me/Helpers/_ListViewFromFiles.dart';
@@ -43,10 +42,10 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
   }*/
   updateUI() async {
     setState(() {});
-    await Fluttertoast.showToast(
+    /*await Fluttertoast.showToast(
       msg: 'GeeksforGeeks', // Message to display in the toast
       backgroundColor: Colors.grey, // Background color of the toast
-    );
+    );*/
   }
 
   @override
@@ -131,6 +130,7 @@ class _ParsingSchedualFromFileState extends State<ParsingSchedualFromFile> {
                       context,
                       snapshot.data as List<File>,
                       "لا يوجد ملفات محفوظة ",
+                      updateUI,
                     ),
                   );
                 }

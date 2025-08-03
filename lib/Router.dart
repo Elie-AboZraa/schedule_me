@@ -3,7 +3,7 @@ import 'package:schedule_me/Pages/choosing_schedual.dart';
 import 'package:schedule_me/Pages/home.dart';
 import 'package:schedule_me/Pages/login.dart';
 import 'package:schedule_me/Pages/choosing_subject.dart';
-import 'package:schedule_me/Pages/parsing_schedual_from_file.dart';
+import 'package:schedule_me/Pages/parse_schedule.dart';
 
 dynamic createRoute({required String selection,dynamic data}) {
   return PageRouteBuilder(

@@ -64,6 +64,10 @@ class CacheDir {
     f.copySync(d.path + p.basename(f.path));
   }
 
+  void DeleteFile(File file) {
+    file.deleteSync();
+  }
+
   saveScheduleAsJson(String jsonString, String filename) {
     var d = Directory(directory.path + '/UserScheduals/');
     d.createSync(recursive: true);
